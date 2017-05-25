@@ -1,0 +1,259 @@
+<footer class="footer-wrapper">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row show-grid">
+        <div class="about-social col-sm-4">
+          <div class="about">
+            <img src="{{ 'footer_about_logo.png' | asset_url }}" alt="" />
+            {% if settings.footer_about_content !='' %} 
+            <div class="about-text"> 
+              {% if settings.language_enable %}
+              <span class="lang1">{{ settings.footer_about_content | split: '|' | first }}</span>
+              <span class="lang2">{{ settings.footer_about_content | split: '|' | last }}</span>
+              {% else %}
+              {{ settings.footer_about_content | split: '|' | first }}
+              {% endif %}
+            </div>
+            {% endif %}
+            <div class="social">
+              {% if settings.social_link_heading !='' %}
+              <div class="title-footer"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.social_link_heading | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.social_link_heading | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.social_link_heading | split: '|' | first }}
+                {% endif %}
+              </div>
+              {% endif %}
+              {% if settings.social_facebook_link !='' or settings.social_twitter_link !='' or settings.social_bee_link !='' or settings.social_googleplus_link !='' or settings.social_instagram_link !='' %}
+              <ul class="social-icons small light">
+                {% if settings.social_facebook_link !='' %}
+                <li class="facebook">
+                  <a class="fa fa-facebook" href="{{settings.social_facebook_link}}" target="_blank"><span>Facebook</span></a>
+                </li>
+                {% endif %}
+                {% if settings.social_twitter_link !='' %}
+                <li class="twitter">
+                  <a class="fa fa-twitter" href="{{settings.social_twitter_link}}" target="_blank"><span>Twitter</span></a>
+                </li>
+                {% endif %}
+                {% if settings.social_bee_link !='' %}
+                <li class="behance">
+                  <a class="fa fa-behance" href="{{settings.social_bee_link}}" target="_blank"><span>Behance</span></a>
+                </li>
+                {% endif %}
+                {% if settings.social_googleplus_link !='' %}
+                <li class="gplus">
+                  <a class="fa fa-google-plus" href="{{settings.social_googleplus_link}}" target="_blank"><span>Google plus</span></a>
+                </li>
+                {% endif %}
+                {% if settings.social_instagram_link !='' %}
+                <li class="instagram">
+                  <a class="fa fa-instagram" href="{{settings.social_instagram_link}}" target="_blank"><span>Instagram</span></a>
+                </li>
+                {% endif %} 
+              </ul>
+              {% endif %} 
+            </div>
+          </div>
+        </div>
+        <div class="list-footer col-sm-8">
+          <div class="row">
+            <div class="col-sm-12 newslettter">
+              <div class="block block-subscribe">
+                {% if settings.newsletter_form_title !='' %}
+                <div class="block-title">
+                  <span> 
+                    {% if settings.language_enable %}
+                    <span class="lang1">{{ settings.newsletter_form_title | split: '|' | first }}</span>
+                    <span class="lang2">{{ settings.newsletter_form_title | split: '|' | last }}</span>
+                    {% else %}
+                    {{ settings.newsletter_form_title | split: '|' | first }}
+                    {% endif %}
+                  </span>
+                </div>
+                {% endif %}
+                {% if settings.newsletter_form_action != blank %}
+                {% assign form_action = settings.newsletter_form_action %}
+                {% else %}
+                {% assign form_action = '#' %}
+                {% endif %}
+                <form id="subscribe_footer" action="{{ form_action }}" method="post" name="mc-embedded-subscribe-form" class="input-group">
+                  <div class="item">
+                    <div class="input-box">
+                      <input id="fc-email" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" required="required" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+                    </div>
+                    <div class="actions">
+                      <input type="submit" class="btn-button uppercase effect" name="subscribe" {% if settings.language_enable %}data-translate="general.newsletter_form.submit"{% endif %} value="{{ 'general.newsletter_form.submit' | t }}">
+                    </div>
+                  </div> 
+                  <label id="fc-response" for="fc-email"></label>
+                </form> 
+                <script type="text/javascript">
+                  jQuery(document).ready(function() {  
+                    var $_form = jQuery('#subscribe_footer');
+                    var $_action = $_form.attr('action');
+                    $_form.ajaxChimp({
+                      url: $_action,
+                      callback: function(resp){  
+                        $('#fc-response').show();
+                      }
+                    });
+                  });
+                </script>
+              </div>
+            </div>
+            <div class="col-sm-12 footer-links">
+              <div class="footer-links">
+                <div class="row"> 
+                  {% if settings.footer_linklist1_show %}
+                  <div class="col-sm-4 info-footer">
+                    <div class="widget-wrapper animated">
+                      {% if settings.footer_linklist1_heading != blank %}
+                      <div class="footer-block-title">
+                        <h3> 
+                          {% if settings.language_enable %}
+                          <span class="lang1">{{ settings.footer_linklist1_heading | split: '|' | first }}</span>
+                          <span class="lang2">{{ settings.footer_linklist1_heading | split: '|' | last }}</span>
+                          {% else %}
+                          {{ settings.footer_linklist1_heading | split: '|' | first }}
+                          {% endif %}
+                          <span class="mobile-button visible-xs active">accordion-footer</span>
+                        </h3> 
+                      </div> 
+                      {% endif %}
+                      <div class="custom-footer-content">
+                        {% assign list = linklists[settings.footer_linklist1] %}
+                        <ul class="footer-list">
+                          {% for link in list.links %}
+                          <li>
+                            <a href="{{ link.url }}"> 
+                              {% if settings.language_enable %}
+                              <span class="lang1">{{ link.title | split: '|' | first }}</span>
+                              <span class="lang2">{{ link.title | split: '|' | last }}</span>
+                              {% else %}
+                              {{ link.title | split: '|' | first }}
+                              {% endif %}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}  
+                  {% if settings.footer_linklist2_show %}
+                  <div class="col-sm-4 info-footer">
+                    <div class="widget-wrapper animated">
+                      {% if settings.footer_linklist2_heading != blank %}
+                      <div class="footer-block-title">
+                        <h3> 
+                          {% if settings.language_enable %}
+                          <span class="lang1">{{ settings.footer_linklist2_heading | split: '|' | first }}</span>
+                          <span class="lang2">{{ settings.footer_linklist2_heading | split: '|' | last }}</span>
+                          {% else %}
+                          {{ settings.footer_linklist2_heading | split: '|' | first }}
+                          {% endif %}
+                          <span class="mobile-button visible-xs active">accordion-footer</span>
+                        </h3> 
+                      </div> 
+                      {% endif %}
+                      <div class="custom-footer-content">
+                        {% assign list = linklists[settings.footer_linklist2] %}
+                        <ul class="footer-list">
+                          {% for link in list.links %}
+                          <li>
+                            <a href="{{ link.url }}">
+                              {% if settings.language_enable %}
+                              <span class="lang1">{{ link.title | split: '|' | first }}</span>
+                              <span class="lang2">{{ link.title | split: '|' | last }}</span>
+                              {% else %}
+                              {{ link.title | split: '|' | first }}
+                              {% endif %}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}  
+                  {% if settings.footer_linklist3_show %}
+                  <div class="col-sm-4 info-footer">
+                    <div class="widget-wrapper animated">
+                      {% if settings.footer_linklist3_heading != blank %}
+                      <div class="footer-block-title">
+                        <h3> 
+                          {% if settings.language_enable %}
+                          <span class="lang1">{{ settings.footer_linklist3_heading | split: '|' | first }}</span>
+                          <span class="lang2">{{ settings.footer_linklist3_heading | split: '|' | last }}</span>
+                          {% else %}
+                          {{ settings.footer_linklist3_heading | split: '|' | first }}
+                          {% endif %}
+                          <span class="mobile-button visible-xs active">accordion-footer</span>
+                        </h3> 
+                      </div> 
+                      {% endif %}
+                      <div class="custom-footer-content">
+                        {% assign list = linklists[settings.footer_linklist3] %}
+                        <ul class="footer-list">
+                          {% for link in list.links %}
+                          <li>
+                            <a href="{{ link.url }}">
+                              {% if settings.language_enable %}
+                              <span class="lang1">{{ link.title | split: '|' | first }}</span>
+                              <span class="lang2">{{ link.title | split: '|' | last }}</span>
+                              {% else %}
+                              {{ link.title | split: '|' | first }}
+                              {% endif %}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %} 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      <div class="credit-card">
+        <img class="card-icon card-icon-1" src="{{ 'card-visa.svg' | asset_url }}"></img>
+      	<img class="card-icon card-icon-2" src="{{ 'card-mastercard.svg' | asset_url }}"></img>
+        <img class="card-icon card-icon-3" src="{{ 'card-amex.svg' | asset_url }}"></img>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <address> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ settings.footer_copyright_content | split: '|' | first }}</span>
+            <span class="lang2">{{ settings.footer_copyright_content | split: '|' | last }}</span>
+            {% else %}
+            {{ settings.footer_copyright_content | split: '|' | first }}
+            {% endif %}
+          </address>
+          
+        </div>
+        <div class="col-lg-4">
+          <div id="back-top" class="hidden-phone">
+            <a href="#top">
+              <div class="sticker-wrapper">
+                <div class="sticker">
+                  <i class="fa fa-angle-up"></i>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

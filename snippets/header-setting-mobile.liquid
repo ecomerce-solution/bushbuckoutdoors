@@ -1,0 +1,61 @@
+<div class="setting-switcher switcher-wrap">
+  <div class="overwrite-setting skip-link" onclick="mobileSkipLink(this);" data-target-element="#navbar-setting"> 
+    <span class="fa fa-cog visible-tablet"></span>
+  </div> 
+  <div id="navbar-setting" class="switcher-content skip-content">
+  	<ul class="links">
+      {% if customer %}
+      <li>
+        {% assign page_tmp = pages[settings.wishlist_page] %}
+        <a href="{{page_tmp.url}}" {% if settings.language_enable %}data-translate="header.settings.wishlist"{% endif %}>{{'header.settings.wishlist' | t}}</a>
+      </li>
+      <li>
+        <a href="/account" {% if settings.language_enable %}data-translate="header.settings.my_account"{% endif %}>{{ 'header.settings.my_account' | t }}</a>
+      </li>
+      <li>
+        <a href="/account/logout" {% if settings.language_enable %}data-translate="header.settings.logout"{% endif %}>{{ 'header.settings.logout' | t }}</a>
+      </li>
+      {% else %}
+      <li>
+        <a href="/account/login" {% if settings.language_enable %}data-translate="header.settings.wishlist"{% endif %}>{{'header.settings.wishlist' | t}}</a>
+      </li>
+      <li>
+        <a href="/account/login" {% if settings.language_enable %}data-translate="customer.login.sign_in"{% endif %}>{{ 'customer.login.sign_in' | t }}</a>
+      </li>
+      <li>
+        <a href="/account/register" {% if settings.language_enable %}data-translate="header.settings.register"{% endif %}>{{ 'header.settings.register' | t }}</a>
+      </li>
+      {% endif %}
+    </ul>
+    {% if settings.language_enable %}
+    <div class="language-currency ">
+      <div class="language-switcher switcher-wrap">
+        <div class="title-selector"><span {% if settings.language_enable %}data-translate="header.settings.language"{% endif %}>{{ 'header.settings.language' | t }}</span></div>
+        <ul class="select-language clearfix">
+          <li><a href="javascript:void(0);" class="active" data-lang="1"><img alt="" src="{{ 'flag_icon_1.png' | asset_url }}"></a></li>
+          <li><a href="javascript:void(0);" data-lang="2"><img alt="" src="{{ 'flag_icon_2.png' | asset_url }}"></a></li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+    {% if settings.currency_enable %}
+    <div class="block block-currency">
+      <div class="title-selector">
+        <span {% if settings.language_enable %}data-translate="header.settings.currency"{% endif %}>{{ 'header.settings.currency' | t }}</span>
+      </div>
+      <div class="block-content">
+        <ul class="setting-currency">
+          {% capture codes %},USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK,{% endcapture %}
+          {% assign supported_codes = settings.supported_currencies | split: ' ' %}
+          <li class="selected"><a href="#" data-currency="{{ shop.currency }}">{{ shop.currency }}</a></li>
+          {% for code in supported_codes %}
+          {% if code != shop.currency and codes contains code %}
+          <li><a href="#" data-currency="{{ code }}">{{ code }}</a></li>
+          {% endif %}
+          {% endfor %} 
+        </ul> 
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

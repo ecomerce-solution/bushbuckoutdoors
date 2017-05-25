@@ -1,0 +1,151 @@
+{% if settings.home_ico_slide_fullwidth == '1' %}
+</div>
+{% endif %}
+<div class="ico-slider-outer">
+    <div id="ico-slider-1" class="ico-slider swiper-container" data-type="slider" data-fullscreen="{{ settings.home_ico_slide_fullscreen}}" data-max-height="{{ settings.home_ico_slide_max_height }}" data-transition="{{ settings.home_ico_slide_transition }}" data-loop="true" data-slide-count="5" data-autoplay="{{ settings.home_ico_auto_speed }}" data-continue="{{ settings.home_ico_slide_continue }}">
+        <div class="swiper-wrapper">
+          {% for i in (1..6) %}
+          {% capture slide %}ico_slide_{{ i }}_enable{% endcapture %}
+          {% capture slide_bg_type %}ico_slide_{{ i }}_bg_type{% endcapture %} 
+          {% capture slide_img %}ico_slide_{{ i }}.jpg{% endcapture %}
+          {% capture slide_bg_color %}ico_slide_{{ i }}_bg_color{% endcapture %}
+          {% capture slide_video %}ico_slide_{{ i }}_video{% endcapture %}
+          {% capture slide_overlay_opacity %}ico_slide_{{ i }}_overlay_opacity{% endcapture %}
+          {% capture slide_bgimage_valign %}ico_slide_{{ i }}_bgimage_valign{% endcapture %}
+          {% capture slide_styleling %}ico_slide_{{ i }}_slide_styleling{% endcapture %}
+          {% capture slide_caption_title %}ico_slide_{{ i }}_caption_title{% endcapture %}
+          {% capture slide_caption_text %}ico_slide_{{ i }}_caption_text{% endcapture %}
+          {% capture slide_button_text %}ico_slide_{{ i }}_button_text{% endcapture %}
+          {% capture slide_link %}ico_slide_{{ i }}_link{% endcapture %}
+          {% capture slide_caption_x %}ico_slide_{{ i }}_caption_x{% endcapture %}
+          {% capture slide_caption_y %}ico_slide_{{ i }}_caption_y{% endcapture %}
+          {% capture slide_video_loop %}ico_slide_{{ i }}_video_loop{% endcapture %}
+          {% capture slide_video_mute %}ico_slide_{{ i }}_video_mute{% endcapture %}
+          {% capture slide_video_overlay %}ico_slide_{{ i }}_video_overlay{% endcapture %}  
+          {% if settings[slide] %}
+            <div class="swiper-slide {% if settings[slide_bg_type] == 'image' %} image-slide image-slide-{{ i }} {% endif %} {% if settings[slide_bg_type] == 'color' %} color-slide {% endif %} {% if settings[slide_bg_type] == 'video' %} video-slide {% endif %}" data-slide-id="{{ i }}" style="background-image: url({{ slide_img | asset_url }});background-color: {{ settings[slide_bg_color] }}" data-bg-align="center" data-slide-title="{{ settings[slide_caption_title]}}" data-slide-img="{{ slide_img | asset_url }}" data-style="{{ settings[slide_styleling] }}">
+                <div class="overlay" style="-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity={{ settings[slide_overlay_opacity] }}0)';filter: alpha(opacity={{ settings[slide_overlay_opacity] }}0);-moz-opacity: 0.{{ settings[slide_overlay_opacity] }};-khtml-opacity: 0.{{ settings[slide_overlay_opacity] }};opacity: 0.{{ settings[slide_overlay_opacity] }};background-color: {{ settings[slide_bg_color] }};"></div>
+                <div class="caption-wrap container">
+      				<div class="caption-content" data-caption-color="" data-caption-x="{{ settings[slide_caption_x] }}" data-caption-y="{{ settings[slide_caption_y]}}" data-caption-size="smaller">
+                    	<img class="slide-icon slide-icon-1" src="{{ 'slider_icon_1.svg' | asset_url }}"></img>
+              			<img class="slide-icon slide-icon-2" src="{{ 'slider_icon_2.svg' | asset_url }}"></img>
+          				<img class="slide-icon slide-icon-3" src="{{ 'slider_icon_3.svg' | asset_url }}"></img>
+                      	{% if settings[slide_caption_title] !=''%}
+                        <h2 class="caption-title"> 
+                          {% if settings.language_enable %}
+                          <span class="lang1">{{ settings[slide_caption_title] | split: '|' | first }}</span>
+                          <span class="lang2">{{ settings[slide_caption_title] | split: '|' | last }}</span>
+                          {% else %}
+                          {{ settings[slide_caption_title] | split: '|' | first }}
+                          {% endif %}
+                      	</h2>
+                        {% endif %}
+                        <div class="caption-excerpt">
+                          {% if settings[slide_caption_text] !=''%}
+                          <span>
+                            {% if settings.language_enable %}
+                            <span class="lang1">{{ settings[slide_caption_text] | split: '|' | first }}</span>
+                            <span class="lang2">{{ settings[slide_caption_text] | split: '|' | last }}</span>
+                            {% else %}
+                            {{ settings[slide_caption_text] | split: '|' | first }}
+                            {% endif %}
+                            
+                            <!--          Newletter Subscription                    -->
+                            
+                            <div class="block block-subscribe">
+                              
+                              {% if settings.newsletter_form_action != blank %}
+                              {% assign form_action = settings.newsletter_form_action %}
+                              {% else %}
+                              {% assign form_action = '#' %}
+                              {% endif %}
+                              <form id="newsletter_subscribe_slide" action="{{ form_action }}" method="post" name="mc-embedded-subscribe-form" class="input-group">
+                                <div class="item">
+                                  <div class="input-box">
+                                    <input id="fc-email" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.your_email' | t }}" name="EMAIL" required="required" class="input-group-field fc-email" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+                                  </div>
+                                  <div class="actions">
+                                    <input type="submit" class="btn-button uppercase effect" name="subscribe" {% if settings.language_enable %}data-translate="general.newsletter_form.submit"{% endif %} value="{{ 'general.newsletter_form.subscribe' | t }}">
+                                  </div>
+                                </div> 
+                                <label id="fc-response" for="fc-email"></label>
+                              </form> 
+                              <script type="text/javascript">
+                                jQuery(document).ready(function() {  
+                                  var $_form = jQuery('#subscribe_footer');
+                                  var $_action = $_form.attr('action');
+                                  $_form.ajaxChimp({
+                                    url: $_action,
+                                    callback: function(resp){  
+                                      $('#fc-response').show();
+                                    }
+                                  });
+                                });
+                              </script>
+                            </div>
+							<!--          Newletter Subscription                    -->
+                            
+                            {% if settings[slide_button_text] !=''%}
+                            <a class="link" href="{{ settings[slide_link]}}" target="_self">
+                              <span class="text"> 
+                                {% if settings.language_enable %}
+                                <span class="lang1">{{ settings[slide_button_text] | split: '|' | first }}</span>
+                                <span class="lang2">{{ settings[slide_button_text] | split: '|' | last }}</span>
+                                {% else %}
+                                {{ settings[slide_button_text] | split: '|' | first }}
+                                {% endif %}
+                              </span>
+                            </a>
+                            {% endif %}
+                          </span>
+                          {% endif %} 
+                        </div>
+                    </div>
+                </div>
+                {% if settings[slide_bg_type] == 'video' %} 
+                <div class="video-wrap">
+                  {% if settings[slide_video_overlay] != 'none' %}
+                  <div class="video-overlay overlay-{{ settings[slide_video_overlay]}}" style="opacity: 1;"></div>
+                  {% endif %}
+                  <video class="video" poster="{{ slide_img | asset_url }}" autoplay="" {% if settings[slide_video_loop] == 'loop' %}loop=""{% endif %} {% if settings[slide_video_mute] == 'mute' %}muted=""{% endif %} preload="auto" data-width="0" data-height="0">
+                    <source src="{{ settings[slide_video] }}" type="video/mp4">
+                  </video>
+                </div>
+                {% endif %}
+            </div>  
+          {% endif %}
+          {% endfor %}
+        </div> 
+        {% if settings.home_ico_slide_navigation == '1' %}
+        <a class="ico-slider-prev {{ settings[slide_styleling] }}" href="#">
+          <i class="fa fa-angle-left"></i><h4>prev</h4>
+        </a>
+        <a class="ico-slider-next {{ settings[slide_styleling] }}" href="#">
+          <i class="fa fa-angle-right"></i><h4>next</h4>
+        </a>
+        {% endif %}
+        {% if settings.home_ico_slide_pagination == '1' %}
+        <div class="ico-slider-pagination {{ settings[slide_styleling] }}" style="display: block;">
+          {% for i in (1..6) %}
+          {% capture slide %}ico_slide_{{ i }}_enable{% endcapture %}
+          {% if settings[slide] %}
+          <div class="dot">
+            <span class=""></span>
+          </div> 
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% if settings.home_ico_slide_continue == '1' %}
+        <a href="#" class="ico-slider-continue light"><i class="fa fa-angle-down"></i></a>
+        {% endif %}
+        <div id="ico-slider-loader" class="circle-bar">
+          <div class="spinner ">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div>
+</div>
+{% if settings.home_ico_slide_fullwidth == '1' %}
+  <div class="wrapper">
+{% endif %}

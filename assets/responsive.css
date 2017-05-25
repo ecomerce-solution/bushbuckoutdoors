@@ -1,0 +1,222 @@
+@media (max-width: 1024px) {
+  .visible-tablet {
+    display: block;
+  }
+  .hidden-tablet {
+    display: none;
+  }
+  .header-wrapper .header-container #main-header-mobile-sticky-wrapper {display: block;}
+  #main-header-sticky-wrapper, #wrapper-top-menu-sticky-wrapper {display: none;} 
+  .header-wrapper .header-container .main-header.mobile-header .right-header-menu {
+  	position:relative;
+    text-align: right;
+  }
+  .header-wrapper .header-container .main-header.mobile-header .right-header-menu .right-wrapp {
+  	display: inline-block;
+  }
+  .header-wrapper .header-container .main-header.mobile-header .right-header-menu .item.header-menu {
+  	position: static;
+  }
+  /*=============================================
+  # Main
+  ===============================================*/
+  /*Deal of the day*/ 
+  .main-container .deal-of-day {
+  	min-height: 400px;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+  } 
+  .main-container .deal-of-day .content {
+  	width: 100%;
+    left: 0;
+    top: 13%;
+  }
+  .main-container .deal-of-day img {
+    max-width: 180%;
+    width: auto;
+  }
+  /*Instagram*/ 
+  .block-instafeed .blog-items .grid-items .blog-item {
+    width: 25%;
+  }
+  /*collection page*/
+  .category-products .itemgrid .item {
+    width: 33.333%;
+  }
+  .itemgrid .item {
+    width: 33.333%;
+  }
+  /*product page*/
+  .product-view .product-img-box .product-img-list .more-views-verticle {
+  	width: 60px;
+  }
+  .product-view .product-img-box .product-img-list .more-views-verticle .media-list {
+  	width: 60px;
+    height: 280px;
+  }
+  /*=============================================
+  # Footer
+  ===============================================*/
+  .footer-wrapper .footer-top .list-footer .newslettter .block-subscribe {
+  	padding: 0 0 50px;
+  }
+  .footer-wrapper .footer-top .list-footer .footer-links {
+  	margin: 0;
+  }
+  .footer-wrapper .footer-top .list-footer .footer-links .info-footer h3 {
+  	font-size: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .hidden-phone {
+    display: none;
+  }
+  .visible-phone {
+    display: block;
+  }
+  .swiper-slide .caption-content {
+    padding: 0 10px;
+  }
+  /*=============================================
+  # Header
+  ===============================================*/
+  /*cart mobile*/
+  .header-wrapper .header-container .main-header.mobile-header .right-header-menu .cart-container .cart-wrapper {
+  	right: -100px;
+  }
+  /*=============================================
+  # Main
+  ===============================================*/
+  /*product new home*/
+  .main-container .products-collection h3.title-widget span, 
+  .main-container .products-related h3.title-widget span, 
+  .main-container .blog-homepage h3.title-widget span, 
+  .main-container .products-crosssell h3.title-widget span {
+  	font-size: 14px;
+    padding: 0 10px;
+  }  
+  /*Video*/
+  .main-container .video-wrapper .upb_video-wrapper em {
+    top: 33%;
+    right: 44%;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+  }
+  /*product tab home*/
+  .main-container .tab-product-collection .tab-selector:before {
+  	background-color:  transparent;
+  }
+  .main-container .tab-product-collection .tab-selector ul.nav-tabs li {
+  	clear: left;
+    margin: 0;
+  }
+  /*Deal of the day*/
+  .main-container .deal-of-day {
+  	min-height: 300px;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+  } 
+  .main-container .deal-of-day .content {
+  	width: 100%;
+    left: 0;
+    top: 10%;
+  }
+  .main-container .deal-of-day img {
+    max-width: 280%;
+    width: auto;
+  }
+  .main-container .deal-of-day .content span.title {
+    font-size: 30px;
+  }
+  .main-container .deal-of-day .content span.intro {
+    font-size: 16px;
+  }
+  .main-container .deal-of-day .content .wrapper-product-date .product-date div {
+    width: 70px;
+    float: left;
+    margin-right: 5px;
+  }
+  .main-container .deal-of-day .content .wrapper-product-date .product-date div span.no {
+    width: 65px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 25px;
+  }
+  .main-container .deal-of-day .content .wrapper-product-date .product-date div span.text {
+    width: 70px;
+    font-size: 13px;
+    line-height: 25px;
+  }
+  .main-container .deal-of-day .content .shop-now a {
+    font-size: 12px;
+    line-height: 35px;
+    text-align: center;
+    padding: 0 20px;
+  }
+  /*Instagram*/
+
+  .block-instafeed .blog-items .grid-items .blog-item {
+    width: 50%;
+  }
+  /*sidebar*/
+  .main-container .sidebar .block-nav {
+  	display: none;
+  }
+  .main-container .sidebar .block .block-content {
+  	display: none;
+  }
+  /*collection page*/
+  .toolbar .sorter_wrap .select-new .select-inner span, 
+  .toolbar .limited_wrap .select-new .select-inner span {
+  	padding-left: 10px;
+    letter-spacing: 1px;
+  }
+  .toolbar .sorter_wrap .select-new .select-inner select, 
+  .toolbar .limited_wrap .select-new .select-inner select {
+  	padding: 0 0px 0 5px;
+  }
+  .toolbar .view-mode span.layout-opt {
+  	padding: 0 9px;
+  } 
+  .itemgrid .item {
+    width: 50% !important;
+  }
+  /*product page*/
+  .product-view .product-img-box .product-img-list .more-views-verticle {
+  	width: 60px;
+  }
+  .product-view .product-img-box .product-img-list .more-views-verticle .media-list {
+  	width: 60px;
+    height: 280px;
+  }
+  .product-view .product-shop .short-description {
+  	padding: 0 20px;
+  }
+  .product-view .product-options-bottom .add-to-cart-box {
+  	padding: 10px 0 10px 20px; 
+  }
+  /*=============================================
+  # Footer
+  ===============================================*/
+  .newslettter .block-subscribe form .input-box {
+  	margin-right: 120px; 
+  }
+  .newslettter .block-subscribe form .actions .btn-button {
+  	padding: 0 20px;
+  }
+  .footer-wrapper .footer-top .list-footer .footer-links .info-footer h3 {
+  	margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  .footer-wrapper .footer-top .list-footer .footer-links .custom-footer-content {
+  	display: none;
+  }
+}
+@media only screen and (max-width: 479px) {
+  .itemgrid .item {
+    width: 100% !important;
+  }
+}

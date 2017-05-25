@@ -1,0 +1,207 @@
+<div class="mlvedaform">
+<!-- /templates/product.liquid --> 
+<!-- {% assign variant_tmp = product.selected_variant %} -->
+{% assign variant_tmp = product.selected_or_first_available_variant | default: product.variants.first %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+
+<div id="current_variant_id" data-id="{{variant_tmp.id}}"></div>
+<div id="current_variant_sku" data-id="{{variant_tmp.sku}}"></div>
+<div id="current_variant_price" data-id="{{variant_tmp.price}}"></div>
+
+{% include 'breadcrumb' %} 
+<div class="product-main">     
+  <div class="container">
+    <div class="row">
+      <div class="product-view product">
+        <div class="product-essential">
+          <div class="product-img-box col-sm-6">
+            <div class="product-img-list">
+          	{% include 'media' %}
+            </div>
+          </div> 
+          <div class="product-shop col-md-6 col-sm-6">
+            <div class="product-shop-wrapper">
+              <div class="product-prev-next nav-wrapper pull-right">  
+                {% if collection %}
+                  {% if collection.previous_product or collection.next_product %} 
+                    {% if collection.previous_product %}
+                    <a href="{{ collection.previous_product }}" class="product-prev"><i class="fa fa-angle-left"></i></a> 
+                    {% endif %}
+                    {% if collection.next_product %}
+                    <a href="{{ collection.next_product }}" class="product-next"><i class="fa fa-angle-right"></i></a> 
+                    {% endif %} 
+                  {% endif %}
+                {% endif %}
+              </div>
+              <div class="product-name top-product-detail">
+                <h2>
+                  <a href="{{ product.url | within: collection }}"> 
+                    {% if settings.language_enable %}
+                    <span class="lang1">{{ product.title | split: '|' | first }}</span>
+                    <span class="lang2">{{ product.title | split: '|' | last }}</span>
+                    {% else %}
+                    {{ product.title | split: '|' | first }}
+                    {% endif %}
+                  </a>
+                </h2> 
+              </div>
+              <div class="middle-product-detail">
+                <div class="review-product-details">
+                	<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                </div>
+                <div class="product-type-data">
+                  <div class="price-box"> 
+                    <div id="soldout"><span>Sold Out</span></div>
+                    <div id="price" class="detail-price" itemprop="price"> 
+                      {% if variant_tmp.compare_at_price > variant_tmp.price %}
+                      <s class="old-price"> {{ variant_tmp.price | money }}</s>
+                      <!--span class="price_percentage">-{{ variant_tmp.compare_at_price | minus: variant_tmp.price | times: 100.0 | divided_by: variant_tmp.compare_at_price | money_without_currency | times: 100 | remove: '.0'}}%</span-->
+                      {% endif %}
+                      <div class="price">{{ variant_tmp.price | money }}</div> 
+                    </div>
+                    <meta itemprop="priceCurrency" content="{{ shop.currency }}" /> 
+                    {% if product.available %}
+                    <link itemprop="availability" href="http://schema.org/InStock" />
+                    {% else %}
+                    <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                    {% endif %}
+                  </div>
+                </div>
+                
+                <div class="notify_form notify-form-{{ product.id }}" id="notify-form-{{ product.id }}" {% if product.available %}style="display:none"{% endif %}>
+                  <p class="message"></p>
+                  {% form 'contact' %}
+                    {% if form.posted_successfully? %}
+                      <p><em>{{ 'products.notify_form.post_success' | t }}</em></p>
+                    {% elsif form.errors %}
+                      <p><em>{{ 'products.notify_form.post_error' | t }}</em></p>
+                    {% else %}
+                      <p class="notify-container">
+                        <label for="contact[email]">{{ 'products.notify_form.description' | t }}:</label>
+
+                        {% if customer %}
+                          <input type="hidden" name="contact[email]" class="notify_email" value="{{ customer.email }}" />
+                        {% else %}
+                          <input required type="email" class="notify_email" name="contact[email]" id="contact[email]" placeholder="{{ 'products.notify_form.email' | t }}" value="{{ contact.fields.email }}" />
+                        {% endif %}
+
+                        <input type="hidden" name="contact[body]" class="notify_form_message" data-body="{{ 'products.notify_form.message_content' | t: product: product.title, url: canonical_url }}" value="{{ 'products.notify_form.message_content' | t: product: product.title, url: canonical_url }}" />
+                        <input class="action_button" type="submit" value="{{ 'products.notify_form.send' | t }}" style="margin-bottom:0px" />    
+                      </p>
+                    {% endif %}
+                  {% endform %}
+                </div>
+                
+                {% if settings.product_share_enable != blank %}
+                {% capture permalinkURL %}{{ shop.url }}{{ product.url }}{% endcapture %}
+                <div class="product-share"> 
+                  <div class="sf-share-counts">
+                    <h3 class="share-text">{{ 'products.product.share' | t }}</h3>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ permalinkURL }}&amp;height=640&amp;width=660&amp;resizable=0&amp;toolbar=0&amp;menubar=0&amp;status=0&amp;location=0&amp;scrollbars=0" class="sf-share-link sf-share-fb"><i class="fa fa-facebook"></i><span class="count animate">0</span></a>
+                    <a href="http://twitter.com/share?text=Plain Backpack&amp;url={{ permalinkURL }}&amp;height=640&amp;width=660&amp;resizable=0&amp;toolbar=0&amp;menubar=0&amp;status=0&amp;location=0&amp;scrollbars=0" class="sf-share-link sf-share-twit"><i class="fa fa-twitter"></i><span class="count animate">0</span></a>
+                    <a href="http://pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media={{ featured_image | product_img_url:'grande' }}&amp;description=Plain Backpack&amp;height=640&amp;width=660&amp;resizable=0&amp;toolbar=0&amp;menubar=0&amp;status=0&amp;location=0&amp;scrollbars=0" class="sf-share-link sf-share-pin"><i class="fa fa-pinterest"></i><span class="count animate">0</span></a>
+                  </div>
+                </div>
+                {% endif %}
+                <div class="short-description-detail">
+                  <div class="short-description"> 
+                    {% if settings.language_enable %}
+                    <span class="lang1">{{ product.description | strip_html | split: '[lang2]' | first | truncatewords: 50 }}</span>
+                    <span class="lang2">{{ product.description | strip_html | split: '[lang2]' | last | truncatewords: 50 }}</span>
+                    {% else %}
+                    {{ product.description | strip_html | split: '[lang2]' | first | truncatewords: 50 }}
+                    {% endif %}
+                  </div>
+                </div> 
+              </div> 
+              <div class="product-type-main">  
+                <form class="product-form" id="product-form" action="/cart/add" method="post" enctype="multipart/form-data" data-product-id="{{product.id}}" data-id="{{ product.handle }}"> 
+                  <div id="product-variants" class="product-options" {% if product.options.size == 1 and product.options.first == 'Title' %}style="display: none;"{% endif %}> 
+                    <select id="product-select" name="id" style="display: none;">
+                      {% for variant in product.variants %}
+                      {% if variant.available %}
+                      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                      {% else %}
+                      <option disabled="disabled">
+                        {{ variant.title }} - {{'products.product.sold_out' | t}}
+                      </option>
+                      {% endif %}
+                      {% endfor %}
+                    </select> 
+                  </div> 
+                  <div class="product-options-bottom"> 
+                    <div class="add-to-cart-box">
+                      <div class="input-box pull-left">
+                        <label for="Quantity" class="quantity-selector">{{ 'products.product.quantity' | t }}</label> 
+                        <div class="reduced items" onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty > 1 ) result.value--;return false;">
+                          <i class="fa fa-minus"></i>
+                        </div>
+                        <input type="text" id="qty" name="quantity" value="1" min="1" class="quantity-selector"> 
+                        <div class="increase items" onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;">
+                          <i class="fa fa-plus"></i>
+                        </div>
+                      </div>
+                      <div class="actions">
+                        <div class="action-list addtocart">
+                          <div class="button-wrapper">
+                            <div class="icon_bag_alt"></div> 
+                            {% if product.available %}
+                            <button type="submit" name="add" class="btn-cart add-to-cart">
+                              <span>
+                                <span class="add-to-cart" {% if settings.language_enable %}data-translate="products.product.add_to_cart"{% endif %}>{{ 'products.product.add_to_cart' | t }}</span>
+                              </span>
+                            </button> 
+                            {% else %}
+                            <a href="javascript:;" class="btn-cart">
+                              <span>
+                                <span class="add-to-cart" {% if settings.language_enable %}data-translate="products.product.sold_out"{% endif %}>{{ 'products.product.sold_out' | t }}</span>
+                              </span>
+                            </a>  
+                            {% endif %}
+                          </div>
+                          {% include 'virtusize-product' with product %}
+                        </div>
+                        <div class="action-list wishlist wishlist-{{product.id}}">
+                          {% include 'wishlist-item'%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>   
+              </div>
+            </div>
+          </div>
+        </div> 
+        <div class="product-collateral">    
+          <div class="product-description rte" itemprop="description">
+            {% include 'product-description-tabs' %}
+          </div> 
+        </div>
+        <div class="products-related">
+        	{% include 'related-products' %}
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
+<script>productsObj.id{{product.id}} = {{product | json}};</script>
+</div>
+
+{% for option in product.options %}
+  {%  if option contains 'mlveda_country' %}
+
+
+{% include 'mlveda-multipricing-options' %}
+
+{%  endif %}
+
+{% endfor %}
+
+{% for option in product.options %}
+  {%  if option contains 'mlveda_country' %}
+
+{% include 'mlveda-multipricing-selectors' %}
+
+{%  endif %}
+
+{% endfor %}

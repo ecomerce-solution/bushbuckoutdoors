@@ -1,0 +1,151 @@
+{% assign carousel = settings.tab_products_collection_carousel %} 
+{% assign limit = settings.tab_products_collection_limit %} 
+{% if settings.tab_products_collection_column != '5' and settings.tab_products_collection_column != '7' %}
+{% assign col = 12 | divided_by: settings.tab_products_collection_column %}
+{% else %}
+{% assign col = settings.tab_products_collection_column %}
+{% endif %}
+<div class="container"> 
+  <div class="row">
+  <div class="tab-product-collection">
+    <div class="tab-selector">
+      <ul class="nav nav-tabs" role="tablist">
+        {% if settings.tab_collection_1 !='' %}
+        <li class="active">
+          <a href="#collection1" data-toggle="tab"> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ settings.tab_collection_title_1 | split: '|' | first }}</span>
+            <span class="lang2">{{ settings.tab_collection_title_1 | split: '|' | last }}</span>
+            {% else %}
+            {{ settings.tab_collection_title_1 | split: '|' | first }}
+            {% endif %}
+          </a>
+        </li>
+        {% endif %}
+        {% if settings.tab_collection_2 !='' %}
+        <li>
+          <a href="#collection2" data-toggle="tab"> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ settings.tab_collection_title_2 | split: '|' | first }}</span>
+            <span class="lang2">{{ settings.tab_collection_title_2 | split: '|' | last }}</span>
+            {% else %}
+            {{ settings.tab_collection_title_2 | split: '|' | first }}
+            {% endif %}
+          </a>
+        </li>
+        {% endif %}
+        {% if settings.tab_collection_3 !='' %}
+        <li>
+          <a href="#collection3" data-toggle="tab"> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ settings.tab_collection_title_3 | split: '|' | first }}</span>
+            <span class="lang2">{{ settings.tab_collection_title_3 | split: '|' | last }}</span>
+            {% else %}
+            {{ settings.tab_collection_title_3 | split: '|' | first }}
+            {% endif %}
+          </a>
+        </li>
+        {% endif %}
+        {% if settings.tab_collection_4 !='' %}
+        <li>
+          <a href="#collection4" data-toggle="tab"> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ settings.tab_collection_title_4 | split: '|' | first }}</span>
+            <span class="lang2">{{ settings.tab_collection_title_4 | split: '|' | last }}</span>
+            {% else %}
+            {{ settings.tab_collection_title_4 | split: '|' | first }}
+            {% endif %}
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div> 
+    <div class="tab-content"> 
+      {% if settings.tab_collection_1 !='' %}
+      <div class="tab-pane active" id="collection1">
+      	<div class="category-products"> 
+          {% assign collection1 = collections[settings.tab_collection_1] %}   
+          <div class="data-carousel" 
+               data-items="{{ settings.tab_products_collection_column }}"
+               data-auto="{{ settings.tab_products_collection_autoplay }}"
+               data-paging="{{ settings.tab_products_collection_show_paging }}"
+               data-nav="{{ settings.tab_products_collection_show_nav }}"
+               data-prev='{{ settings.tab_products_collection_nav_prev }}'
+               data-next='{{ settings.tab_products_collection_nav_next }}' style="display: none;"></div>
+          <div class="products-grid {% if carousel %} owl-carousel {% else %} grid-product-masonry {% endif %}"> 
+            {% for product in collection1.products limit: settings.tab_products_collection_limit %}  
+            <div class="item product {% if carousel %} effect-pageLeft {% else %} col-sm-{{ col }} {% endif %}" data-order="{{ forloop.index | plus:1 }}">
+            {% include 'product-grid-item' %}
+            </div> 
+            {% endfor %} 
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if settings.tab_collection_2 !='' %}
+      <div class="tab-pane" id="collection2">
+      	<div class="category-products"> 
+          {% assign collection2 = collections[settings.tab_collection_2] %}   
+          <div class="data-carousel" 
+               data-items="{{ settings.tab_products_collection_column }}"
+               data-auto="{{ settings.tab_products_collection_autoplay }}"
+               data-paging="{{ settings.tab_products_collection_show_paging }}"
+               data-nav="{{ settings.tab_products_collection_show_nav }}"
+               data-prev='{{ settings.tab_products_collection_nav_prev }}'
+               data-next='{{ settings.tab_products_collection_nav_next }}' style="display: none;"></div>
+          <div class="products-grid {% if carousel %} owl-carousel {% else %} grid-product-masonry {% endif %}"> 
+            {% for product in collection2.products limit: settings.tab_products_collection_limit %}  
+            <div class="item product {% if carousel %} effect-pageLeft {% else %} col-sm-{{ col }} {% endif %}" data-order="{{ forloop.index | plus:1 }}">
+            {% include 'product-grid-item' %}
+            </div> 
+            {% endfor %} 
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if settings.tab_collection_3 !='' %}
+      <div class="tab-pane" id="collection3">
+      	<div class="category-products"> 
+          {% assign collection3 = collections[settings.tab_collection_3] %}   
+          <div class="data-carousel" 
+               data-items="{{ settings.tab_products_collection_column }}"
+               data-auto="{{ settings.tab_products_collection_autoplay }}"
+               data-paging="{{ settings.tab_products_collection_show_paging }}"
+               data-nav="{{ settings.tab_products_collection_show_nav }}"
+               data-prev='{{ settings.tab_products_collection_nav_prev }}'
+               data-next='{{ settings.tab_products_collection_nav_next }}' style="display: none;"></div>
+          <div class="products-grid {% if carousel %} owl-carousel {% else %} grid-product-masonry {% endif %}"> 
+            {% for product in collection3.products limit: settings.tab_products_collection_limit %}  
+            <div class="item product {% if carousel %} effect-pageLeft {% else %} col-sm-{{ col }} {% endif %}" data-order="{{ forloop.index | plus:1 }}">
+            {% include 'product-grid-item' %}
+            </div> 
+            {% endfor %} 
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if settings.tab_collection_4 !='' %}
+      <div class="tab-pane" id="collection4">
+      	<div class="category-products"> 
+          {% assign collection4 = collections[settings.tab_collection_4] %}   
+          <div class="data-carousel" 
+               data-items="{{ settings.tab_products_collection_column }}"
+               data-auto="{{ settings.tab_products_collection_autoplay }}"
+               data-paging="{{ settings.tab_products_collection_show_paging }}"
+               data-nav="{{ settings.tab_products_collection_show_nav }}"
+               data-prev='{{ settings.tab_products_collection_nav_prev }}'
+               data-next='{{ settings.tab_products_collection_nav_next }}' style="display: none;"></div>
+          <div class="products-grid {% if carousel %} owl-carousel {% else %} grid-product-masonry {% endif %}"> 
+            {% for product in collection4.products limit: settings.tab_products_collection_limit %}  
+            <div class="item product {% if carousel %} effect-pageLeft {% else %} col-sm-{{ col }} {% endif %}" data-order="{{ forloop.index | plus:1 }}">
+            {% include 'product-grid-item' %}
+            </div> 
+            {% endfor %} 
+          </div>
+        </div>
+      </div>
+      {% endif %} 
+    </div>
+  </div>
+  </div>
+</div>

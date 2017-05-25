@@ -1,0 +1,75 @@
+<!-- /templates/blog.liquid --> 
+
+{% paginate blog.articles by 5 %} 
+{% include 'breadcrumb' %}
+ 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3 sidebar"> 
+      {% include 'blog-sidebar' %} 
+    </div>
+    <div class="col-sm-9">
+    	<div class="blog-wrapper">  
+          {% for article in blog.articles %}
+          <div class="postWrapper">
+            <div class="postTitle">
+              <h3>
+                <a href="{{ article.url }}"> 
+                  {% if settings.language_enable %}
+                  <span class="lang1">{{ article.title | split: '|' | first }}</span>
+                  <span class="lang2">{{ article.title | split: '|' | last }}</span>
+                  {% else %}
+                  {{ article.title | split: '|' | first }}
+                  {% endif %}
+                </a>
+              </h3> 
+              <div class="postDetails">
+                <a href="{{ article.url }}#Comments" {% if settings.language_enable %}data-translate="blogs.comments.comments_with_count|count:{{article.comments_count}}"{%endif%}>
+                  {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                </a>
+                | {% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}
+                {% capture date %}
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{ article.published_at | date: format: 'month_day_year' }}
+                </time>
+                {% endcapture %} 
+                <span class="blog_author" {% if settings.language_enable %}data-translate="blogs.article.author_on_date_html|date:{{date}},author:{{author}}" translate-item="blog-date-author"{%endif%}>
+                  {{ 'blogs.article.author_on_date_html' | t: date: date, author: author }}        
+                </span>
+              </div>
+            </div> 
+            <div class="postContent">
+              {% if article.excerpt contains '<img' %}
+              <div class="excerpt img-responsive">
+                <a href="{{ article.url }}">
+                  {{ article.excerpt }}
+                </a>
+              </div>
+              {% elsif article.excerpt contains '<iframe' %}
+              <div class="excerpt video-responsive">
+                {{ article.excerpt }}
+              </div> 
+              {% endif %} 
+              {% if settings.language_enable %}
+              <span class="lang1">{{ article.content | strip_html | split: '[lang2]' | first | truncatewords: 100 }}</span>
+              <span class="lang2">{{ article.content | strip_html | split: '[lang2]' | last | truncatewords: 100 }}</span>
+              {% else %}
+              {{ article.content | strip_html | split: '[lang2]' | first | truncatewords: 100}}
+              {% endif %} 
+            </div> 
+            <a class="btn-button" href="{{ article.url }}" {% if settings.language_enable %}data-translate="blogs.article.read_more"{% endif %}>{{ 'blogs.article.read_more' | t }} &rarr;</a> 
+          </div>
+          {% endfor %} 
+          {% if paginate.pages > 1 %} 
+          <div class="pagenav-wrap">
+            <div class="pagination">
+              {{ paginate | default_pagination | replace: '&laquo; Previous', '<i class="fa fa-angle-left"></i>' | replace: 'Next &raquo;', '<i class="fa fa-angle-right"></i>' }}
+            </div>
+          </div>
+          {% endif %}
+
+      </div> 
+    </div>
+  </div> 
+</div> 
+{% endpaginate %}

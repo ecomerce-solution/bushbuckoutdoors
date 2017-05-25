@@ -1,0 +1,69 @@
+<!-- /templates/collection.liquid -->
+{% if settings.collection_columns != '5' %}
+{% assign col = 12 | divided_by: settings.collection_columns %}
+{% else %}
+{% assign col = settings.collection_columns %}
+{% endif %}
+{% if settings.collection_sidebar_position == 'right' %}
+{% assign sidebar_class = 'col-lg-push-9' %}
+{% assign main_class = 'col-lg-pull-3' %}
+{% endif %}
+{% paginate collection.products by 12 %} 
+{% include 'breadcrumb' %} 
+<div class="container">
+  <div class="row">
+    {% if settings.collection_sidebar_position != 'none' %}
+    <div class="col-md-3 col-sm-12 sidebar {{ sidebar_class }}">
+      {% include 'collection-sidebar' %}
+    </div>
+    {% endif %}
+  	<div class="{% if settings.collection_sidebar_position != 'none' %} col-md-9 col-sm-12{% else %} col-sm-12{% endif %} {{ main_class }}"> 
+      {% if collection.description != blank %} 
+      	<div class="category-content"> 
+          {% if settings.language_enable %}
+          <div class="lang1">{{ collection.description | split: '[lang2]' | first }}</div>
+          <div class="lang2">{{ collection.description | split: '[lang2]' | last }}</div>
+          {% else %}
+          {{ collection.description | split: '[lang2]' | first }}
+          {% endif %}
+      	</div> 
+      {% endif %}
+      <div id="collection-main">
+        <div class="toolbar">
+          <div class="row">
+            {% include 'collection-sorting' %}
+          </div>
+        </div>  
+        <div class="row">
+          <div class="category-products">
+            <div id="products" class="products-grid itemgrid grid-product-masonry">
+              {% for product in collection.products %} 
+              <div class="item product col-sm-{{ col }}">
+                {% include 'product-grid-item' %} 
+              </div> 
+              {% else %}
+              {% if collection.handle == 'all' and current_tags == '' %}  
+              {% unless emptyState %}
+              {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+              {% assign emptyState = true %}
+              {% endunless %}
+              {% include 'onboarding-empty-collection' %} 
+              {% else %}  
+              <div class="col-sm-12"><p>{{ 'collections.general.no_matches' | t }}</p> </div>
+              {% endif %} 
+              {% endfor %}
+            </div>
+          </div>  
+        </div>
+      </div>
+      {% if paginate.pages > 1 %} 
+      <div class="pagenav-wrap">
+        <div class="pagination">
+          {{ paginate | default_pagination | replace: '&laquo; Previous', '<i class="fa fa-angle-left"></i>' | replace: 'Next &raquo;', '<i class="fa fa-angle-right"></i>' }}
+        </div>
+      </div>
+      {% endif %} 
+  	</div>
+  </div>
+</div>
+{% endpaginate %}

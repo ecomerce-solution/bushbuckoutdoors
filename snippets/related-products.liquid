@@ -1,0 +1,47 @@
+<div class="title-wrapper">
+  <h3 class="title-widget"><span class="inner" {% if settings.language_enable %}data-translate="products..related_products"{% endif %}>{{ 'products.general.related_products' | t }}</span></h3> 
+  <span class="arrow-left"></span>
+  <span class="arrow-right"></span>
+</div>
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+  {% assign found_a_collection = false %}
+  {% for c in product.collections %}
+    {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %} 
+{% if collection and collection.products_count > 1 %} 
+  <div class="category-products related-products">
+   	{% assign carousel = settings.related_product_carousel %} 
+    {% assign limit = settings.related_product_limit | plus: 1 %} 
+    {% if settings.related_product_column != '5' and settings.related_product_column != '7' %}
+    {% assign col = 12 | divided_by: settings.related_product_column %}
+    {% else %}
+    {% assign col = settings.related_product_column %}
+    {% endif %}
+    <div class="data-carousel" 
+           data-items="{{ settings.related_product_column }}"
+           data-auto="{{ settings.related_product_autoplay }}"
+           data-paging="{{ settings.related_product_show_paging }}"
+           data-nav="{{ settings.related_product_show_nav }}"
+           data-prev='{{ settings.related_product_nav_prev }}'
+           data-next='{{ settings.related_product_nav_next }}' style="display: none;"></div>
+    <div class="products-grid {% if carousel %} owl-carousel {% else %} grid-product-masonry {% endif %}"> 
+      {% assign current_product = product %}
+      {% assign current_product_found = false %}
+      {% for product in collection.products limit: limit %} 
+        {% if product.handle == current_product.handle %}
+          {% assign current_product_found = true %}
+        {% else %}
+          {% unless current_product_found == false and forloop.last %}
+      		<div class="item product {% if carousel %} effect-pageLeft {% else %} col-sm-{{ col }} {% endif %}" data-order="{{ forloop.index | plus:1 }}">
+            {% include 'product-grid-item' %}
+      		</div>
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

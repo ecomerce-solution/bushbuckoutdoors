@@ -1,0 +1,107 @@
+{% if template contains 'product' %}
+<script>
+$("<style type=\"text/css\">  div.mlvedaform span.money {visibility:hidden;}</style>").appendTo("head");
+</script>
+{% endif %}
+<script>
+  
+var mlvedaCallUrl = "//www.mlveda.com/ShopifyApps/ShopifyMultiPricing/getLocation?shop={{ shop.permanent_domain }}&rnd=" + Math.floor((Math.random() * 10000000000) + 1);
+      
+var syncWithThemePageFlag = false;   
+
+var country = null;
+var continent = null;
+var countryFound = false;  
+var continentFound = false
+      var abcd = $.ajax({
+        url: mlvedaCallUrl,
+        type: "GET",
+        dataType: "json",
+        async: true,
+        timeout: 10000,
+        success: function(response) {
+        if (response === "") {
+       		$("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+      	}
+        else {
+              country = response.country;
+        	  continent = response.continent;
+        
+          		$('#country-code').html(country.toLowerCase());
+          
+   				 if (($("label:contains('mlveda_country')").parent().find("select").val() !== country && country!=null) || ($("label:contains('mlveda_country')").parent().find("select").val() !== continent && continent!=null) || $("label:contains('mlveda_country')").parent().find("select").val() !== "intl")
+    			{
+      			//console.log($("label:contains('mlveda_country')").parent().find("select").val());
+      			//console.log("country is " + country);
+    			if ($("label:contains('mlveda_country')").parent().find('select option[value='+ country  + ']').length !=0 || $("label:contains('mlveda_country')").parent().find('select option[value='+ continent  + ']').length !=0 || $("label:contains('mlveda_country')").parent().find('select option[value="intl"]').length !=0)
+    			{
+                  if($("label:contains('mlveda_country')").parent().find('select option[value='+ country  + ']').length !=0) {
+        			$("label:contains('mlveda_country')").parent().find("select").val(country).trigger("change");
+                  }
+                  else if($("label:contains('mlveda_country')").parent().find('select option[value='+ continent  + ']').length !=0) {
+                    $("label:contains('mlveda_country')").parent().find("select").val(continent).trigger("change");
+                  }
+                  else {
+                    $("label:contains('mlveda_country')").parent().find("select").val("intl").trigger("change");
+                  }
+                  $("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+    			}
+                 if($("label:contains('mlveda_country')").parent().find("select").find("option").length <=1)
+                 {
+                        $("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+                 }
+    			}
+            } 
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            $("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+        console.log("timeout");
+      }
+});
+$("body").delegate("select", "change", function(event) {
+
+    
+  
+    if ($("label:contains('mlveda_country')").parent().find("select").val() !== country && country!=null)
+    {
+      //console.log($("label:contains('mlveda_country')").parent().find("select").val());
+      //console.log("country is " + country);
+    if ($("label:contains('mlveda_country')").parent().find('select option[value='+ country  + ']').length !=0)
+    {
+        countryFound = true;
+        $("label:contains('mlveda_country')").parent().find("select").val(country).trigger("change");
+        jQuery('span.money span.money').each(function() {
+            jQuery(this).parents('span.money').removeClass('money');
+        });
+    }
+    $("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+    }
+  else if ($("label:contains('mlveda_country')").parent().find("select").val() !== continent && continent!=null && !countryFound)
+    {
+      continentFound = true
+      //console.log($("label:contains('mlveda_country')").parent().find("select").val());
+      //console.log("continent is " + continent);
+    if ($("label:contains('mlveda_country')").parent().find('select option[value='+ continent  + ']').length !=0)
+    {
+        $("label:contains('mlveda_country')").parent().find("select").val(continent).trigger("change");
+        jQuery('span.money span.money').each(function() {
+            jQuery(this).parents('span.money').removeClass('money');
+        });
+    }
+    $("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+    }
+  else
+  {
+    if ($("label:contains('mlveda_country')").parent().find('select option[value="intl"]').length !=0 && !countryFound && !continentFound)
+    {
+        $("label:contains('mlveda_country')").parent().find("select").val("intl").trigger("change");
+        jQuery('span.money span.money').each(function() {
+            jQuery(this).parents('span.money').removeClass('money');
+        });
+    }
+        $("<style type=\"text/css\">  div.mlvedaform span.money {visibility:visible;}</style>").appendTo("head");
+    
+  }
+});
+
+</script>

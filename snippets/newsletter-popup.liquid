@@ -1,0 +1,58 @@
+{% if settings.newsletter_enable != blank %} 
+<div style="display: none">
+  <div id="popup_newsletter" class="block block-subscribe">
+    <div class="block-title">
+      <span {% if settings.language_enable %}data-translate="general.newsletter_form.title"{% endif %}>{{ 'general.newsletter_form.title' | t }}</span>
+    </div>
+    <div class="content"> 
+      {% if settings.language_enable %}
+      <span class="lang1">{{ settings.newsletter_content | split: '|' | first  }}</span>
+      <span class="lang2">{{ settings.newsletter_content | split: '|' | last }}</span>
+      {% else %}
+      {{ settings.newsletter_content | split: '|' | first }}
+      {% endif %}
+    </div>
+    {% if settings.newsletter_form_action != blank %}
+    {% assign form_action = settings.newsletter_form_action %}
+    {% else %}
+    {% assign form_action = '#' %}
+    {% endif %}
+    <form id="subscribe_popup" action="{{ form_action }}" method="post" name="mc-embedded-subscribe-form">
+      <div class="block-content">
+        <div class="input-box"> 
+          <input id="mc-email" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" name="EMAIL" required="required" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" class="input-group-field input-text" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+          <label id="mc-response" for="mc-email"></label>
+          <div class="action-newsletter"> 
+            <input type="submit" class="btn-button uppercase effect" name="subscribe" {% if settings.language_enable %}data-translate="general.newsletter_form.submit"{% endif %} value="{{ 'general.newsletter_form.submit' | t }}">
+          </div> 
+        </div>
+        <label class="subcriper_label">
+          <input type="checkbox">
+          <span {% if settings.language_enable %}data-translate="general.newsletter_form.noitice"{% endif %}>{{ 'general.newsletter_form.noitice' | t }}</span>
+        </label>
+      </div> 
+    </form>
+  </div>  
+</div>
+<script type="text/javascript">
+  var newsletterData = {};
+  newsletterData.bg_color = '{{ settings.newsletter_bg_color }}';
+  {% if settings.newsletter_bg_image_use != blank %}
+  newsletterData.bg_image = '{{ 'newsletter_bg_image.jpg' | asset_url }}';
+  {% else %}
+  newsletterData.bg_image = '';
+  {% endif %}
+  newsletterData.width = '{{ settings.newsletter_width }}';
+  newsletterData.height = '{{ settings.newsletter_height }}';
+  jQuery(document).ready(function() {  
+    var $_form = jQuery('#subscribe_popup');
+    var $_action = $_form.attr('action');
+    $_form.ajaxChimp({
+      url: $_action,
+      callback: function(resp){ 
+        $('#mc-response').show();
+      }
+    });
+  });
+</script>
+{% endif %}

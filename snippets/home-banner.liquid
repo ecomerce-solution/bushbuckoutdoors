@@ -1,0 +1,193 @@
+<!-- Policy Block -->
+<div class="block-under-menu">
+	<div class="container">
+      <div class="policy-wrapper">
+		<div class="row">
+          <div class="col-sm-4 col-xs-12 no-padd">
+            <div class="policy">
+              <a class="policy-link1" href="http://www.bushbuck.io/pages/returns-policy">
+              <div class="policy-icon">
+                  <img class="slide-icon slide-icon-1" src="{{ 'Header_icon1.svg' | asset_url }}"></img>
+              </div>
+              <div class="policy-text">
+              	<span>{{ 'homepage.block_under_menu.block_title_1' | t }}</span>
+              	<p>{{ 'homepage.block_under_menu.block_desc_1' | t }}</p>
+              </div>
+              </a>
+          	</div>
+          </div>
+          <div class="col-sm-4 col-xs-12 no-padd">
+            <div class="policy">
+              <a class="policy-link2" href="http://bushbuck.helpscoutdocs.com/article/92-how-do-i-get-free-shipping">
+              <div class="policy-icon">
+                  <img class="slide-icon slide-icon-1" src="{{ 'Header_icon2.svg' | asset_url }}"></img>
+              </div>
+              <div class="policy-text">
+              	<span>{{ 'homepage.block_under_menu.block_title_2' | t }}</span>
+              	<p>{{ 'homepage.block_under_menu.block_desc_2' | t }}</p>
+              </div>
+              </a>
+          	</div>
+          </div>
+  		  <div class="col-sm-4 col-xs-12 no-padd">
+            <div class="policy">
+              <a class="policy-link3" href=tel:0800-287-4282>
+              <div class="policy-icon">
+                  <img class="slide-icon slide-icon-1" src="{{ 'Header_icon3.svg' | asset_url }}"></img>
+              </div>
+              <div class="policy-text">
+              	<span>{{ 'homepage.block_under_menu.block_title_3' | t }}</span>
+              	<p>{{ 'homepage.block_under_menu.block_desc_3' | t }}</p>
+              </div>
+              </a>
+          	</div>
+          </div>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="home-banner">
+      <div class="col-sm-4 col-xs-12 no-padd">
+        {% if settings.home_banner_1_enable %}
+        <div class="banner-wrapper">
+          <div class="inner-banner">
+            <div class="overlay">
+              <span class="widget widget-category-link">
+                <a href="{{ settings.home_banner_link_1}}"><i class="fs1" aria-hidden="true" data-icon="$"></i></a>
+              </span>
+            </div>
+            <div class="banner-img"> 
+              <img src="{{ 'home_banner_1.jpg' | asset_url }}" alt="{{ settings.home_banner_title_1}}" />
+            </div>
+          </div>
+          <div class="banner-content">
+            <span class="content-inner">
+              <span class="text"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.home_banner_title_1 | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.home_banner_title_1 | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.home_banner_title_1 | split: '|' | first }}
+                {% endif %}
+              </span>
+              <span class="text-italic"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.home_banner_content_1 | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.home_banner_content_1 | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.home_banner_content_1 | split: '|' | first }}
+                {% endif %}
+              </span>
+              <span class="action">
+                <a href="{{ settings.home_banner_link_1}}"> 
+                  {% if settings.language_enable %}
+                  <span class="lang1">{{ settings.home_banner_button_text_1 | split: '|' | first }}</span>
+                  <span class="lang2">{{ settings.home_banner_button_text_1 | split: '|' | last }}</span>
+                  {% else %}
+                  {{ settings.home_banner_button_text_1 | split: '|' | first }}
+                  {% endif %}
+                </a>
+              </span>
+            </span>
+          </div>
+        </div>
+        {% endif %}
+      </div> 
+      <div class="col-sm-4 col-xs-12 no-padd">
+        {% if settings.home_banner_2_enable %}
+        <div class="banner-wrapper"> 
+          <div class="banner-content">
+            <span class="content-inner">
+              <span class="text"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.home_banner_title_2 | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.home_banner_title_2 | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.home_banner_title_2 | split: '|' | first }}
+                {% endif %}
+              </span>
+              <span class="text-italic"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.home_banner_content_2 | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.home_banner_content_2 | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.home_banner_content_2 | split: '|' | first }}
+                {% endif %}
+              </span>
+              <span class="action">
+                <a href="{{ settings.home_banner_link_2}}"> 
+                  {% if settings.language_enable %}
+                  <span class="lang1">{{ settings.home_banner_button_text_2 | split: '|' | first }}</span>
+                  <span class="lang2">{{ settings.home_banner_button_text_2 | split: '|' | last }}</span>
+                  {% else %}
+                  {{ settings.home_banner_button_text_2 | split: '|' | first }}
+                  {% endif %}
+                </a>
+              </span>
+            </span>
+          </div>
+          <div class="inner-banner">
+            <div class="overlay">
+              <span class="widget widget-category-link">
+                <a href="{{ settings.home_banner_link_2}}"><i class="fs1" aria-hidden="true" data-icon="$"></i></a>
+              </span>
+            </div>
+            <div class="banner-img"> 
+              <img src="{{ 'home_banner_2.jpg' | asset_url }}" alt="{{ settings.home_banner_title_2}}" />
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div> 
+      <div class="col-sm-4 col-xs-12 no-padd"> 
+        {% if settings.home_banner_3_enable %}
+        <div class="banner-wrapper">
+          <div class="inner-banner">
+            <div class="overlay">
+              <span class="widget widget-category-link">
+                <a href="{{ settings.home_banner_link_3}}"><i class="fs1" aria-hidden="true" data-icon="$"></i></a>
+              </span>
+            </div>
+            <div class="banner-img"> 
+              <img src="{{ 'home_banner_3.jpg' | asset_url }}" alt="{{ settings.home_banner_title_3}}" />
+            </div>
+          </div>
+          <div class="banner-content">
+            <span class="content-inner">
+              <span class="text"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.home_banner_title_3 | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.home_banner_title_3 | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.home_banner_title_3 | split: '|' | first }}
+                {% endif %}
+              </span>
+              <span class="text-italic"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ settings.home_banner_content_3 | split: '|' | first }}</span>
+                <span class="lang2">{{ settings.home_banner_content_3 | split: '|' | last }}</span>
+                {% else %}
+                {{ settings.home_banner_content_3 | split: '|' | first }}
+                {% endif %}
+              </span>
+              <span class="action">
+                <a href="{{ settings.home_banner_link_3}}"> 
+                  {% if settings.language_enable %}
+                  <span class="lang1">{{ settings.home_banner_button_text_3 | split: '|' | first }}</span>
+                  <span class="lang2">{{ settings.home_banner_button_text_3 | split: '|' | last }}</span>
+                  {% else %}
+                  {{ settings.home_banner_button_text_3 | split: '|' | first }}
+                  {% endif %}
+                </a>
+              </span>
+            </span>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<header class="header-wrapper">
+  <div class="header-container"> 
+    <div id="main-header-mobile" class="main-header mobile-header visible-tablet">
+      {% if template == 'index' %}
+      {% if settings.logo_home_use_image %}
+      <a href="/" class="logo">
+        <img class="x1" src="{{ 'logo-home.png' | asset_url }}" alt="{{ shop.name }}" />
+        <img class="logo-sticky" src="{{ 'logo-sticky.png' | asset_url }}" alt="{{ shop.name }}" />
+      </a>
+      {% endif %}
+      {% else %}
+      {% if settings.logo_use_image %}
+      <a href="/" class="logo">
+        <img class="x1" src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" />
+        <img class="logo-sticky" src="{{ 'logo-sticky.png' | asset_url }}" alt="{{ shop.name }}" />
+      </a>
+      {% endif %}
+      {% endif %} 
+      <div class="right-header-menu"> 
+        <div class="right-wrapp"> 
+          <div class="item header-search">
+            <div class="search-container">
+              <div class="overwrite-setting skip-link" onclick="mobileSkipLink(this);" data-target-element="#navbar-search">
+                <span class="fa fa-search"></span>
+              </div>
+              <div id="navbar-search" class="switcher-content skip-content">
+                {% include 'search-bar' %}
+              </div>
+            </div>
+          </div> 
+          <div class="item header-maincart">
+            {% include 'header-cart-mobile' %}
+          </div>  
+          <div class="item header-setting">
+            {% include 'header-setting-mobile' %} 
+          </div>  
+          <div class="item header-menu">
+            {% include 'mobile-menu' %} 
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div id="main-header" class="main-header hidden-tablet" data-sticky="{% if settings.sticky_header_enable != blank %}true{% else %}false{% endif %}">  
+      <div class="main-header-top">
+        {% if template == 'index' %}
+        {% if settings.logo_home_use_image %}
+        <a href="/" class="logo">
+          <img class="x1" src="{{ 'logo-home.png' | asset_url }}" alt="{{ shop.name }}" />
+          <img class="logo-sticky" src="{{ 'logo-sticky.png' | asset_url }}" alt="{{ shop.name }}" />
+        </a>
+        {% endif %}
+        {% else %}
+        {% if settings.logo_use_image %}
+        <a href="/" class="logo">
+          <img class="x1" src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" />
+          <img class="logo-sticky" src="{{ 'logo-sticky.png' | asset_url }}" alt="{{ shop.name }}" />
+        </a>
+        {% endif %}
+        {% endif %} 
+        <div class="right-header-menu">
+          {% if template != 'index' %}
+          <div class="item header-search">
+            <div class="search-container">
+              <div class="overwrite-setting">
+                <i class="fa fa-search"></i>
+              </div>
+              <div class="switcher-content">
+                {% include 'search-bar' %}
+              </div>
+            </div>
+          </div>
+          {% endif %} 
+          <div class="item header-maincart">
+            {% include 'header-cart' %} 
+          </div>
+          <div class="item header-setting">
+            {% include 'header-setting' %} 
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div class="top-container">
+    {% if template == 'index' %}
+    {% include 'ico_slide' %} 
+    {% endif %}
+    </div> 
+    <div id="wrapper-top-menu" class="wrapper-top-menu hidden-tablet">
+      <div class="container">
+        <div class="row">
+          <div class="float-none col-sm-12">
+            <!-- Main Menu -->
+            {% include 'main-menu' %} 
+            <!-- End Main Menu -->
+            {% if template == 'index' %}
+            <div class="item header-search">
+              <div class="search-container">
+                <div class="overwrite-setting">
+                  <i class="fa fa-search"></i>
+                </div>
+                <div class="switcher-content">
+                  {% include 'home-search' %}
+                </div>
+              </div>
+            </div> 
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+</header> 

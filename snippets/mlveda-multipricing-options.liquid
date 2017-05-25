@@ -1,0 +1,18 @@
+<script>
+$(".mlvedaform").bind("DOMSubtreeModified", function() {
+ 
+  if ($(".header:contains('mlveda_country')").parent().css('display') !== 'none') {
+        $(".header:contains('mlveda_country')").parent().css('display', 'none');
+    }
+
+
+  $("select").each(function(){    
+    if($(this).find("option").length==1 && $(this).val()==="Default Title" && $(this).css('display')!=="none")  {
+    $(this).css('display','none');
+      $(this).parent().css('display','none');
+  }  
+  });
+
+});
+
+</script>

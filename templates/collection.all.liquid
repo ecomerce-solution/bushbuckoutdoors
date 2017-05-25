@@ -1,0 +1,58 @@
+<!-- /templates/collection.liquid -->
+{% if settings.collection_sidebar_position == 'right' %}
+{% assign sidebar_class = 'col-lg-push-9' %}
+{% assign main_class = 'col-lg-pull-3' %}
+{% endif %}
+{% paginate collection.products by collection.all_products_count %} 
+{% include 'breadcrumb' %} 
+<div class="container">
+  <div class="row">
+    {% if settings.collection_sidebar_position != 'none' %}
+    <div class="col-sm-3 sidebar {{ sidebar_class }}">
+      {% include 'collection-sidebar' %}
+    </div>
+    {% endif %}
+  	<div class="{% if settings.collection_sidebar_position != 'none' %} col-sm-9{% else %} col-sm-12{% endif %} {{ main_class }}"> 
+      {% if collection.description != blank %} 
+      	<div class="category-content">
+        	{{ collection.description }}
+      	</div> 
+      {% endif %}
+      <div id="collection-main">
+        <div class="toolbar">
+          <div class="row">
+            {% include 'collection-sorting' %}
+          </div>
+        </div>  
+        <div class="row">
+          <div class="category-products">
+            <div id="products" class="products-grid grid-product-masonry">
+              {% for product in collection.products %} 
+              <div class="item product col-sm-4">
+                {% include 'product-grid-item' %} 
+              </div> 
+              {% else %}
+              {% if collection.handle == 'all' and current_tags == '' %}  
+              {% unless emptyState %}
+              {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+              {% assign emptyState = true %}
+              {% endunless %}
+              {% include 'onboarding-empty-collection' %} 
+              {% else %}  
+              <p>{{ 'collections.general.no_matches' | t }}</p> 
+              {% endif %} 
+              {% endfor %}
+            </div>
+          </div>  
+        </div>
+      </div>
+      {% if paginate.pages > 1 %} 
+      <div class="pagination">
+        {{ paginate | default_pagination | replace: '&laquo; Previous', '<i class="fa fa-angle-left"></i>' | replace: 'Next &raquo;', '<i class="fa fa-angle-right"></i>' }}
+      </div>
+      {% endif %} 
+  	</div>
+  </div>
+</div>
+{% endpaginate %}
+

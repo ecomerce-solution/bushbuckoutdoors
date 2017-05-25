@@ -1,0 +1,64 @@
+<div class="deal-of-day">
+  <img class="img-responsive" src="{{ 'home_deal_bg.jpg' | asset_url }}" alt="{{ settings.home_deal_title}}" />
+  <div class="content">
+  	<div class="content-top">
+      <span class="title"> 
+        {% if settings.language_enable %}
+        <span class="lang1">{{ settings.home_deal_title | split: '|' | first }}</span>
+        <span class="lang2">{{ settings.home_deal_title | split: '|' | last }}</span>
+        {% else %}
+        {{ settings.home_deal_title | split: '|' | first }}
+        {% endif %}
+      </span> 
+      <span class="intro"> 
+        {% if settings.language_enable %}
+        <span class="lang1">{{ settings.home_deal_content | split: '|' | first }}</span>
+        <span class="lang2">{{ settings.home_deal_content | split: '|' | last }}</span>
+        {% else %}
+        {{ settings.home_deal_content | split: '|' | first }}
+        {% endif %}
+      </span> 
+    </div>
+    <div class="product-countdown">
+      <div class="wrapper-product-date product-deal">
+      	<div class="product-date" data-date="{{ settings.home_deal_date }}"></div>
+      </div>
+      {% if settings.home_deal_product %}
+      <div class="shop-now button"> 
+        {% assign product = all_products[settings.home_deal_product] %}
+        <a class="btn-button effect" href="{{ product.url }}"> 
+          {% if settings.language_enable %}
+          <span class="lang1">{{ settings.home_deal_button_text | split: '|' | first }}</span>
+          <span class="lang2">{{ settings.home_deal_button_text | split: '|' | last }}</span>
+          {% else %}
+          {{ settings.home_deal_button_text | split: '|' | first }}
+          {% endif %}
+        </a>  
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var countdown = {
+    "yearText":"{{ 'general.date.year_text' | t }}",
+    "monthText": "{{ 'general.date.month_text' | t }}",
+    "weekText": "{{ 'general.date.week_text' | t }}",
+    "dayText": "{{ 'general.date.day_text' | t }}",
+    "yearSingularText": "{{ 'general.date.year_singular_text' | t }}",
+    "monthSingularText": "{{ 'general.date.month_singular_text' | t }}",
+    "weekSingularText": "{{ 'general.date.week_singular_text' | t }}",
+    "daySingularText": "{{ 'general.date.day_singular_text' | t }}"
+  };
+  var countdownConfig = {
+    dayText: '',
+    hourText: '',
+    minText: '',
+    secText: '',
+    daySingularText: '',
+    hourSingularText: '',
+    minSingularText: '',
+    secSingularText: ''
+  };
+  var countdownTemplate = '<div class="day"><span class="no">%d</span><span class="text">days</span></div><div class="hours"><span class="no">%h</span><span class="text">hours</span></div><div class="min"><span class="no">%i</span><span class="text">min</span></div><div class="second"><span class="no">%s</span><span class="text">secs</span></div>';
+</script>

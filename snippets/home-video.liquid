@@ -1,0 +1,21 @@
+<div class="video-wrapper">
+  <div class="wrapper-main-video">
+    <div class="container-main-video">
+      <div class="inner-main-video">
+        <div class="upb_video-wrapper">
+          <div class="upb_video-bg" data-bg-override="ex-full">
+            <video  preload="auto" loop="loop">
+              {% if settings.home_video_url_mp4 != '' %}
+              <source src="{{ settings.home_video_url_mp4 }}" type="video/mp4">
+              {% endif %}
+              {% if settings.home_video_url_webm != '' %}
+              <source src="{{ settings.home_video_url_webm }}" type="video/webm">
+              {% endif%}
+            </video>
+            <em class="fa fa-2x fa-play"></em>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div> 
+</div> 

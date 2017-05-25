@@ -1,0 +1,108 @@
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+
+var mlvedaCallUrl = "//www.mlveda.com/ShopifyApps/ShopifyMultiPricing/getPrices?shop={{ shop.permanent_domain }}"
+
+var data = [];
+var mlvedaData = {};
+
+$("a[href*='products']").each(function() {
+
+    var $handleArray = $(this).attr('href').split("/");
+    var $handle = $handleArray[$handleArray.length - 1].split("\?")[0];
+    data.push({"url": $(this).attr('href').split("\?")[0]});
+
+});
+
+mlvedaData = {"data": data};
+
+function checkShopifyFormatMoney() {
+
+    var abcd = $.ajax({
+        url: mlvedaCallUrl,
+        type: "POST",
+        dataType: "json",
+        timeout: 10000,
+        data: {data: JSON.stringify(mlvedaData)},
+        success: function(response) {
+            if (response === "") {
+                $("<style type=\"text/css\">span.money { display: inline; }</style>").appendTo("head");
+               currenciesCallback(); 
+            }
+            else {
+                $.each(response.data, function(index, element) {
+                    $("a[href*='" + element.url + "']").each(function() {
+                        if (element.variantId)
+                        {
+                            $(this).attr("href", element.url + "?variant=" + element.variantId);
+                        }
+                        $mlvedamoney = $(this).parent().find(".money");
+                      
+                      {% if template != "product-xxx" %}
+                        if (!($mlvedamoney.html()) && $(this).parent().hasClass('product-name'))
+                        {
+                            $mlvedamoney = $(this).parent().parent().find(".money");
+                            if (!($mlvedamoney.html()))
+                            {
+                                $mlvedamoney = $(this).parent().parent().parent().find(".money");                                
+                            }
+
+                        }
+                      {% endif %}
+                        if (element.price && $mlvedamoney.html())
+                        {
+                          var $firstMlvedamoney = null;
+                          var $secondMlvedamoney = null;
+                          $mlvedamoney.each(function() {
+                            if($firstMlvedamoney == null) {
+                              $firstMlvedamoney = $(this);
+                            }
+                            else if($secondMlvedamoney == null ) {
+                              $secondMlvedamoney = $(this);//parseInt($(this).html().replace(/[^0-9]/g, ""),10);
+                            }
+                            else {                              
+                              return false;//parseInt($(this).html().replace(/[^0-9]/g, ""),10)                              
+                            }                           
+                            
+                          });
+                          
+                        
+                      
+                        if($secondMlvedamoney == null || !(element.compare_at_price)) {
+                          $firstMlvedamoney.html(Shopify.formatMoney(element.price, "{{ shop.money_with_currency_format | strip_html }}"));
+                        }
+                        else {                        var currentPrice = parseInt($secondMlvedamoney.html().replace(/[^0-9]/g, ""),10);
+                        var previousPrice = parseInt($firstMlvedamoney.html().replace(/[^0-9]/g, ""),10);
+                            if ( currentPrice > previousPrice ) {
+                                $secondMlvedamoney.html(Shopify.formatMoney(element.compare_at_price, "{{ shop.money_with_currency_format | strip_html }}"));
+                                $firstMlvedamoney.html(Shopify.formatMoney(element.price, "{{ shop.money_with_currency_format | strip_html }}"));
+                              }
+                              else {
+                                $firstMlvedamoney.html(Shopify.formatMoney(element.compare_at_price, "{{ shop.money_with_currency_format | strip_html }}"));
+                                $secondMlvedamoney.html(Shopify.formatMoney(element.price, "{{ shop.money_with_currency_format | strip_html }}"));
+                              }
+                              $('span.money span.money').each(function() {
+                                $(this).parents('span.money').removeClass('money');
+                              });
+                             }
+                        }
+                                                                  
+                    });
+                });
+                $("<style type=\"text/css\">span.money{ display: inline; }</style>").appendTo("head");
+            }
+                           currenciesCallback(); 
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            $("<style type=\"text/css\">span.money{ display: inline; }</style>").appendTo("head");
+           currenciesCallback(); 
+        }
+    });
+}
+
+checkShopifyFormatMoney();
+
+
+
+</script>
+<script type="text/javascript" src="//mlveda.com/ShopifyApps/ShopifyMultiPricing/mlvedaUpdates.js"></script>

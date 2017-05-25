@@ -1,0 +1,142 @@
+<!-- /snippets/breadcrumb.liquid -->
+{% comment %}
+  Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{% endcomment %}
+{% unless template == 'index' %}
+<nav class="main-breadcrumbs" role="navigation" aria-label="breadcrumbs">
+  <div class="container"> 
+    <div class="breadcrumbs">
+      <ul>
+        <li class="home">
+      		<a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}" {% if settings.language_enable %}data-translate="general.breadcrumbs.home"{% endif %}>{{ 'general.breadcrumbs.home' | t }}</a>
+        </li>
+      {% if template contains 'product' %}
+        {% if collection %} 
+		<li>
+          <span aria-hidden="true">/</span>
+          {% if collection.handle %}
+            {% capture url %}/collections/{{ collection.handle }}{% endcapture %} 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ collection.title | split: '|' | first | link_to: url }}</span>
+            <span class="lang2">{{ collection.title | split: '|' | last | link_to: url }}</span>
+            {% else %}
+            {{ collection.title | split: '|' | first | link_to: url }}
+            {% endif %}
+          {% endif %}
+        </li>
+        {% endif %}
+        <li>
+        <span aria-hidden="true">/</span>
+        <span> 
+          {% if settings.language_enable %}
+          <span class="lang1">{{ product.title | split: '|' | first  }}</span>
+          <span class="lang2">{{ product.title | split: '|' | last }}</span>
+          {% else %}
+          {{ product.title | split: '|' | first }}
+          {% endif %}  
+        </span>
+        </li>
+      {% elsif template contains 'collection' and collection.handle %} 
+        {% if current_tags %}
+          <li>
+        	<span aria-hidden="true">/</span>
+            {% capture url %}/collections/{{ collection.handle }}{% endcapture %} 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ collection.title | split: '|' | first | link_to: url }}</span>
+            <span class="lang2">{{ collection.title | split: '|' | last | link_to: url }}</span>
+            {% else %}
+            {{ collection.title | split: '|' | first | link_to: url }}
+            {% endif %}
+            <span aria-hidden="true">/</span>
+            <span>{{ current_tags | join: " + " }}</span>
+          </li>
+        {% else %}
+        <li>
+          <span aria-hidden="true">/</span>
+          <span> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ collection.title | split: '|' | first  }}</span>
+            <span class="lang2">{{ collection.title | split: '|' | last }}</span>
+            {% else %}
+            {{ collection.title | split: '|' | first }}
+            {% endif %} 
+          </span> 
+        </li>
+        {% endif %}
+      {% elsif template == 'blog' %}
+        {% if current_tags %}
+		<li>
+        	<span aria-hidden="true">/</span> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ blog.title | split: '|' | first | link_to: blog.url }}</span>
+            <span class="lang2">{{ blog.title | split: '|' | last | link_to: blog.url }}</span>
+            {% else %}
+            {{ blog.title | split: '|' | first | link_to: blog.url }}
+            {% endif %}
+          <span aria-hidden="true">/</span>
+          <span>{{ current_tags | join: " + " }}</span>
+          </li>
+        {% else %}
+        <li>
+        	<span aria-hidden="true">/</span>
+        	<span> 
+              {% if settings.language_enable %}
+              <span class="lang1">{{ blog.title | split: '|' | first  }}</span>
+              <span class="lang2">{{ blog.title | split: '|' | last }}</span>
+              {% else %}
+              {{ blog.title | split: '|' | first }}
+              {% endif %} 
+          	</span>
+        </li>
+        {% endif %}
+      {% elsif template == 'article' %}
+		<li>
+          <span aria-hidden="true">/</span> 
+          {% if settings.language_enable %}
+          <span class="lang1">{{ blog.title | split: '|' | first | link_to: blog.url }}</span>
+          <span class="lang2">{{ blog.title | split: '|' | last | link_to: blog.url }}</span>
+          {% else %}
+          {{ blog.title | split: '|' | first | link_to: blog.url }}
+          {% endif %}
+        </li>
+        <li>
+          <span aria-hidden="true">/</span>
+          <span> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ article.title | split: '|' | first  }}</span>
+            <span class="lang2">{{ article.title | split: '|' | last }}</span>
+            {% else %}
+            {{ article.title | split: '|' | first }}
+            {% endif %}
+          </span>
+        </li>
+      {% elsif template contains 'page' %}
+		<li>
+       <span aria-hidden="true">/</span>
+       <span> 
+         {% if settings.language_enable %}
+         <span class="lang1">{{ page.title | split: '|' | first  }}</span>
+         <span class="lang2">{{ page.title | split: '|' | last }}</span>
+         {% else %}
+         {{ page.title | split: '|' | first }}
+         {% endif %}
+       </span>
+        </li>
+      {% else %}
+		<li>
+       <span aria-hidden="true">/</span>
+       <span> 
+         {% if settings.language_enable %}
+         <span class="lang1">{{ page_title | split: '|' | first  }}</span>
+         <span class="lang2">{{ page_title | split: '|' | last }}</span>
+         {% else %}
+         {{ page_title | split: '|' | first }}
+         {% endif %}
+       </span>
+        </li>
+      {% endif %}
+      </ul>
+    </div>
+  </div> 
+</nav>
+{% endunless %}

@@ -1,0 +1,247 @@
+<!-- /snippets/product-grid-item.liquid --> 
+  
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+ 
+{% assign sold_out = true %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+
+<div class="product-action"> 
+  {% if on_sale %}
+  <div class="product-sale-label" {% if settings.language_enable %}data-translate="products.general.sale"{% endif %}>{{ 'products.general.sale' | t }}</div>
+  {% endif %}
+  <a href="{{ product.url | within: collection }}" class="product-image">
+    <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" class="img-responsive main">
+    {% if product.images[1] %}
+    <img src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" class="alt-img img-responsive">
+    {% endif %}
+  </a> 
+  {% if settings.product_color_swatches_enable != blank %}
+  <ul class="configurable-swatch-list">  
+    {% for option in product.options %}
+    {% if option == 'Color' %}
+    {% assign index = forloop.index0 %}
+    {% assign colorlist = '' %}
+    {% assign color = '' %}
+    {% for variant in product.variants %}
+    {% capture color %}
+    {{ variant.options[index] }}
+    {% endcapture %}
+    {% unless colorlist contains color %} 
+    {% if variant.image.src != blank %}
+    <li><a href="javascript:void(0);" data-image="{{ variant.image.src | img_url: 'large' }}"><img src="{{ color | downcase | strip_newlines | strip_html | remove: '  ' | append: '.png' | replace: ' ', '-' | asset_url }}" alt="{{ color }}" /></a></li>
+    {% endif %}
+    {% capture tempList %}
+    {{colorlist | append: color | append: ' '}}
+    {% endcapture %}
+    {% assign colorlist = tempList %}
+    {% endunless %}
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <div class="actions">
+    <div class="action-list quickview hidden-xs">
+      <div class="quickview-wrapper"><i class="fa fa-search-plus"></i></div>
+    </div>
+    <div class="action-list addtocart">
+      {% if product.available %}
+        {% if product.variants.size > 1 %}
+          <a href="{{ product.url | within: collection }}" class="btn-cart"> 
+            <span><span><i class="fa fa-shopping-cart"></i>{{'products.product.select_options' | t}}</span></span>
+      	  </a>
+        {% else %}
+          <form action="/cart/add" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="quantity" value="1" />
+            <select class="hide" name="id">
+              {% for variant in product.variants %}
+              <option value="{{ variant.id }}">{{ variant.title | escape }} - {{ variant.price | money }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn-cart add-to-cart">
+              <span><span><i class="fa fa-shopping-cart"></i></span></span>
+            </button> 
+          </form>
+        {% endif %}
+      {% else %}
+      	<a href="{{ product.url | within: collection }}" class="btn-cart">
+          <span><span><i class="fa fa-shopping-cart"></i></span></span> 
+        </a>
+      {% endif %}
+    </div>
+    <div class="action-list">
+      {% if settings.wishlist_enable %}
+      <div class="product-wishlist wishlist-{{product.id}}">
+        {% include 'wishlist-item' %}
+      </div>
+      {% endif %}
+    </div>
+  </div> 
+</div>
+<div class="product-content">
+  <h3 class="product-name">
+  	<a href="{{ product.url | within: collection }}" title="{{ product.title }}"> 
+      {% if settings.language_enable %}
+      <span class="lang1">{{ product.title | split: '|' | first }}</span>
+      <span class="lang2">{{ product.title | split: '|' | last }}</span>
+      {% else %}
+      {{ product.title | split: '|' | first }}
+      {% endif %}
+    </a>
+  </h3>
+  <div class="product-short-desc">
+    {% if settings.language_enable %}
+    <span class="lang1">{{ product.content | strip_html | split: '[lang2]' | first | truncatewords: 30 }}</span>
+    <span class="lang2">{{ product.content | strip_html | split: '[lang2]' | last | truncatewords: 30 }}</span>
+    {% else %}
+    {{ product.content | strip_html | split: '[lang2]' | first | truncatewords: 30 }}
+    {% endif %} 
+  </div>
+  <div class="rating-box">
+  	<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span> 
+  </div> 
+  <div class="price"> 
+    {% assign variant_tmp = product.selected_variant | default: product.variants.first %} 
+    <div id="current_variant_id" data-id="{{variant_tmp.id}}"></div>
+<div id="current_variant_sku" data-id="{{variant_tmp.sku}}"></div>
+<div id="current_variant_price" data-id="{{variant_tmp.price}}"></div>
+    {% if on_sale %}
+      {% if product.price_varies %}
+        {% assign sale_price = product.price | money %}
+        
+          <!--{{ 'products.product.on_sale_from_html' | t: price: sale_price }}-->
+    		{{ product.price | money }}
+    <a></a>
+        {% else %} 
+        <div class="special-price">
+          {{ product.price | money }}
+        </div>
+      {% endif %}
+    {% else %}
+      {% if product.price_varies %}
+        {% assign price = product.price | money %}
+        <!--{{ 'products.general.from_text_html' | t: price: price }}-->
+    {{ product.price | money }}
+    
+      {% else %}
+        
+        {{ product.price | money }}
+        
+      {% endif %}
+    {% endif %}
+    {% if sold_out %}
+    {{ 'products.product.sold_out' | t }}
+    {% endif %}
+    {% if on_sale %} 
+    <div class="compare-price">
+      {{ product.compare_at_price | money }}
+    </div>
+    {% endif %} 
+  </div> 
+</div>
+<script data-id="product-block-json-{{product.id}}" type="text/template">productsObj.id{{product.id}} = {{product | json}};</script>
+<script data-id="product-block-template-{{product.id}}" type="text/template">
+	{% assign variant_tmp = product.selected_or_first_available_variant | default: product.variants.first %} 
+	<div class="product-view quick-view product">
+       <div class="product-essential">
+         <div class="product-img-box col-sm-6">
+           <div class="product-img-list">
+          	{% include 'media-quickview' %}
+           </div>
+         </div> 
+         <div class="product-shop col-md-6 col-sm-6">
+            <div class="product-shop-wrapper"> 
+              <div class="product-name top-product-detail">
+              	<h2><a href="{{ product.url | within: collection }}"> 
+                {% if settings.language_enable %}
+                <span class="lang1">{{ product.title | split: '|' | first }}</span>
+                <span class="lang2">{{ product.title | split: '|' | last }}</span>
+                {% else %}
+                {{ product.title | split: '|' | first }}
+                {% endif %}
+  				</a></h2> 
+              </div>
+              <div class="middle-product-detail"> 
+                 <div class="product-type-data">
+                  <div class="price-box"> 
+                    <div id="price" class="detail-price" itemprop="price">
+                      {% if variant_tmp.compare_at_price > variant_tmp.price %}
+                      <del class="price_compare"> {{ variant_tmp.compare_at_price | money }}</del>
+                      {% endif %}
+                      <div class="price">{{ variant_tmp.price | money }}</div>
+                    </div>
+                    <meta itemprop="priceCurrency" content="{{ shop.currency }}" /> 
+                    {% if product.available %}
+                    <link itemprop="availability" href="http://schema.org/InStock" />
+                    {% else %}
+                    <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="short-description-detail">
+                  <div class="short-description"> 
+                    {% if settings.language_enable %}
+                    <span class="lang1">{{ product.description | strip_html | split: '[lang2]' | first | truncatewords: 50 }}</span>
+                    <span class="lang2">{{ product.description | strip_html | split: '[lang2]' | last | truncatewords: 50 }}</span>
+                    {% else %}
+                    {{ product.description | strip_html | split: '[lang2]' | first | truncatewords: 50 }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="product-type-main"> 
+                <form class="product-form" id="product-form" action="/cart/add" method="post" enctype="multipart/form-data" data-product-id="{{product.id}}" data-id="{{ product.handle }}"> 
+                  <div id="product-variants" class="product-options" {% if product.options.size == 1 and product.options.first == 'Title' %}style="display: none;"{% endif %}> 
+                    <select id="product-select" name="id" style="display: none;">
+                      {% for variant in product.variants %}
+                      {% if variant.available %}
+                      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                      {% else %}
+                      <option disabled="disabled">
+                        {{ variant.title }} - {{'products.product.sold_out' | t}}
+                      </option>
+                      {% endif %}
+                      {% endfor %}
+                    </select> 
+                  </div> 
+                  <div class="product-options-bottom"> 
+                    <div class="add-to-cart-box">
+                      <div class="input-box pull-left">
+                        <label for="Quantity" class="quantity-selector" {% if settings.language_enable %}data-translate="products.product.quantity"{% endif %}>{{ 'products.product.quantity' | t }}</label> 
+                        <div class="reduced items" onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty > 1 ) result.value--;return false;">
+                          <i class="fa fa-minus"></i>
+                        </div>
+                        <input type="text" id="qty" name="quantity" value="1" min="1" class="quantity-selector"> 
+                        <div class="increase items" onclick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;">
+                          <i class="fa fa-plus"></i>
+                        </div>
+                      </div>
+                      <div class="actions">
+                        <div class="action-list addtocart">
+                          <div class="button-wrapper">
+                            <div class="icon_bag_alt"></div> 
+                            <button type="submit" name="add" class="btn-cart add-to-cart">
+                              <span>
+                                <span {% if settings.language_enable %}data-translate="products.product.add_to_cart"{% endif %}>{{ 'products.product.add_to_cart' | t }}</span>
+                              </span>
+                            </button> 
+                          </div>
+                        </div>
+                        <div class="action-list wishlist wishlist-{{product.id}}">
+                          {% include 'wishlist-item'%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>  
+              </div>
+            </div>
+          </div>
+       </div
+    </div>
+</script>

@@ -1,0 +1,181 @@
+<!doctype html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta name="google-site-verification" content="Ka1EC4L4w5T5YMcqwB2_qcTFdPFyT80H4EEKsxp91MA" />
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  {% if settings.favicon_enable %}
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+  {% endif %} 
+  {% if template contains 'index' %}
+  {% if page_title != blank and page_title != 'Welcome' %}
+  <title>{{ page_title }}</title>
+  {% else %}
+  <title>{{ shop.name }}</title>
+  {% endif %}
+  {% elsif template == '404' %}
+  <title>Page Not Found - {{ shop.name }}</title>
+  {% else %}
+  <title>{{ page_title }} - {{ shop.name }}</title>
+  {% endif %}
+
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <!-- Helpers ================================================== -->
+  {% include 'social-meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  
+    <!-- build:css css/plugins.css -->
+  {{ 'awe-icon.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+  
+  <!-- CSS ================================================== -->
+  {{ 'font-awesome.min.css' | asset_url | stylesheet_tag }}
+  {{ 'elegantfont.css' | asset_url | stylesheet_tag }}
+  {{ 'ico-slider.css' | asset_url | stylesheet_tag }}
+  {{ 'owl.carousel.css' | asset_url | stylesheet_tag }}
+  {{ 'owl.theme.css' | asset_url | stylesheet_tag }}
+  {{ 'owl.effects.css' | asset_url | stylesheet_tag }}
+  {{ 'effect.css' | asset_url | stylesheet_tag }}
+  {{ 'ultramegamenu.css' | asset_url | stylesheet_tag }}
+  {{ 'colorbox.css' | asset_url | stylesheet_tag }}
+  {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'responsive.css' | asset_url | stylesheet_tag }}
+  {{ 'color-config.scss.css' | asset_url | stylesheet_tag }} 
+  {{ 'jquery.fancybox.css' | asset_url | stylesheet_tag }} 
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+  {% include 'oldIE-js' %}
+
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+  {{ 'modernizr.min.js' | asset_url | script_tag }}
+  {{ 'bootstrap.min.js' | asset_url | script_tag }}
+  {{ 'jquery.cookie.min.js' | asset_url | script_tag }}
+  
+  
+  {% if template contains 'contact' %}
+<!--   {{ '//maps.googleapis.com/maps/api/js' | script_tag }}  -->
+  {{ '//maps.googleapis.com/maps/api/js?key=AIzaSyDpU1IiriltOPmm4Vcw3Qnoa16g46ivg8I' | script_tag }} 
+  {% endif %}
+  {% if template contains 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+  <link href="//fonts.googleapis.com/css?family={{ settings.google_font }}:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400&amp;subset=cyrillic-ext,greek-ext,latin,latin-ext,cyrillic,greek,vietnamese" rel='stylesheet' type='text/css'>
+  <script type="text/javascript">
+    var productsObj = {}; 
+    var swatch_color_enable = {{ settings.product_color_swatches_enable }};
+    var asset_url = '{{'' | asset_url}}';
+    var money_format = '<span class="money">{{shop.money_format}}</span>';
+    var multi_language = {{settings.language_enable}};
+  </script>
+  {% include 'translator' %}
+  <style>
+    {% if settings.product_color_swatches_enable != blank %}
+    .product-view .product-options .selector-wrapper {
+    	display: none;
+    }
+    {% endif %}
+  </style>
+  
+  <script>
+  $("<style type=\"text/css\">span.money{ display: none; }</style>").appendTo("head");
+</script>
+  
+</head> 
+<body id="{{ page_title | handle }}" class="parallax-silde {% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" > 
+  <!-- begin site-header -->
+  {% include 'header' %}
+  <!-- //site-header --> 
+  <div class="main-container">
+    <div class="main-wrapper">
+      <div class="main"> 
+        {{ content_for_layout }} 
+      </div> 
+    </div>
+  </div> 
+  <!-- begin site-footer -->
+  {% include 'footer' %}
+  <!-- //site-footer --> 
+  {% if template contains 'index' %}
+  {% include 'newsletter-popup' %} 
+  {% endif %}
+  {% include 'box-popup' %} 
+  <script type="text/javascript">
+    var frontendData = {};
+    frontendData.logo = "{{ 'logo.png' | asset_url }}";
+    frontendData.logoHome = "{{ 'logo-home.png' | asset_url }}";
+    frontendData.logoRetina = "{{ 'logo-x2.png' | asset_url }}";
+    frontendData.logoHomeRetina = "{{ 'logo-home-x2.png' | asset_url }}";
+    frontendData.enableCurrency = {{ settings.currency_enable }};
+    var dataZoom = {};
+    dataZoom.loading = '{{ 'loader.gif' | asset_url }}';
+    {% if template contains 'product' %}
+    dataZoom.lightbox = {{ settings.media_zoom_lightbox_enable }};
+      {% else %}
+      dataZoom.lightbox = false;
+    {% endif %}
+    dataZoom.position = '{{ settings.media_zoom_position }}';
+    var cartData = {};
+    if (multi_language && translator.isLang2()) {
+      cartData.removeItemLabel = window.lang2.cart.header.remove_this_item;
+      cartData.totalLabel = window.lang2.cart.header.total;
+      cartData.noItemLabel = window.lang2.cart.header.no_item;
+      cartData.buttonViewCart = window.lang2.cart.header.view_cart;
+      cartData.buttonCheckout = window.lang2.cart.header.checkout;
+    }else{
+      cartData.removeItemLabel = '{{ 'cart.header.remove_this_item' | t }}';
+      cartData.totalLabel = '{{ 'cart.header.total' | t }}';
+      cartData.noItemLabel = '{{ 'cart.header.no_item' | t }}';
+      cartData.buttonViewCart = '{{ 'cart.header.view_cart' | t }}';
+      cartData.buttonCheckout = '{{ 'cart.header.checkout' | t }}';
+    } 
+    
+    $('[data-toggle="tooltip"]').tooltip();
+  </script> 
+  {% if template == 'collection' or template contains 'collection.' %}
+  {{ 'shopify_common.js' | asset_url | script_tag }} 
+  {{ 'jquery.history.min.js' | asset_url | script_tag }}
+  {% endif %}
+  {{ 'theme-scripts.js' | asset_url | script_tag }}
+  {{ 'ico-slider.min.js' | asset_url | script_tag }}
+  {{ 'fastclick.min.js' | asset_url | script_tag }}
+  {{ 'form.js' | asset_url | script_tag }} 
+  {{ "jquery.elevatezoom.min.js" | asset_url | script_tag }} 
+  {{ "jquery.fancybox.pack.js" | asset_url | script_tag }} 
+  {{ 'option_selection.js' | asset_url | script_tag }} 
+  {{ 'frontend.min.js' | asset_url | script_tag }}
+  {{ 'jquery.ajaxchimp.js' | asset_url | script_tag }}
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+  
+	<!--  Custom Script  -->
+  {{ 'custom.js' | asset_url | script_tag }}
+  
+  {% include 'currency' %}
+  {% include 'linked-options' %} 
+  {% include 'translator' %}
+  <script>
+    {% if newHash %}
+    $(function() {
+      timber.updateHash('{{ newHash }}');
+    });
+    {% endif %}
+    {% if resetPassword %}
+    $(function() {
+      timber.resetPasswordSuccess();
+    });
+    {% endif %}
+  </script>  
+  
+  {% include 'mlveda-multipricing-updateprice' %}
+  
+</body>
+</html>

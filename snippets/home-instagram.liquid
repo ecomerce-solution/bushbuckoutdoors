@@ -1,0 +1,27 @@
+<div class="block-instafeed blog-wrap">  
+  {% if settings.instagram_title != blank %}
+  <div class="container">
+    <div class="row">
+      <div class="title-wrapper">
+        <h3 class="title-widget">  
+          <span class="inner"> 
+            {% if settings.language_enable %}
+            <span class="lang1">{{ settings.instagram_title | split: '|' | first }}</span>
+            <span class="lang2">{{ settings.instagram_title | split: '|' | last }}</span>
+            {% else %}
+            {{ settings.instagram_title | split: '|' | first }}
+            {% endif %}
+          </span>
+        </h3> 
+        <span class="arrow-left"></span>
+        <span class="arrow-right"></span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <script src="https://showcase.abovemarket.com/embed/gallery/1150" data-gallery-id="1150"></script>
+  <div class="blog-items blog-grid-items">
+    <ul class="grid-items"></ul>
+    <ul class="blog-instagrams" data-count="{{ settings.instagram_limit }}" data-userid="{{ settings.instagram_user_id }}" data-token="{{ settings.instagram_accesstoken }}" data-itemclass="col-sm-ic-1"></ul>
+  </div>
+</div>

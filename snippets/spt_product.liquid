@@ -1,0 +1,36 @@
+{% include 'spt_cssjs'%}
+{% if product.metafields.simplyproducttab.type %}
+{% assign tabcount = product.metafields.simplyproducttab.no_of_tabs %}
+<div class="spt-box-container">
+  <div class="spt-box" data-format="{{product.metafields.simplyproducttab.type}}" {% if product.metafields.simplyproducttab.type contains 'TAB' %} {% else %}style="display:none;" {% endif %}>
+    <ul class="spt-tabs"  {% if product.metafields.simplyproducttab.type contains 'TAB' %} {% else %}style="display:none;" {% endif %}>
+      {% for i in (1..tabcount) %}
+      {% assign c = i %}
+      {% assign title = 'tab_' | append : c | append : '_title' %}
+      <li class="spt-tab-title"><a href="#spt-tab-{{i}}">{{product.metafields.simplyproducttab[title]}}</a></li>
+      {% endfor %}
+    </ul>
+    {% for i in (1..tabcount) %}
+    {% assign c = i %}
+    {% assign description = 'tab_' | append : c | append : '_description' %}
+    <div id="spt-tab-{{i}}" class="spt-tab-desc sp-fix">
+      {{product.metafields.simplyproducttab[description]}}
+    </div>
+    {% endfor %}
+  </div>
+
+  <ul class="spt-accordian" data-format="{{product.metafields.simplyproducttab.type}}" {% if product.metafields.simplyproducttab.type contains 'TAB' %} style="display:none;" {% else %} {% endif %}>
+    {% for i in (1..tabcount) %}
+    {% assign c = i %}
+    {% assign title = 'tab_' | append : c | append : '_title' %}
+    {% assign description = 'tab_' | append : c | append : '_description' %}
+    <li>
+      <h5 class="spt-title">{{product.metafields.simplyproducttab[title]}}</h5>
+      <div class="spt-desc sp-fix">
+        {{product.metafields.simplyproducttab[description]}}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

@@ -1,0 +1,77 @@
+<!-- /templates/page.contact.liquid -->
+{% if settings.google_map_enable != blank %}
+<div class="block-googlemap">
+  {% if settings.google_map_adv_styling_enable != blank %}
+  <div class="map-styles-array" style="display: none;">
+  	{{ settings.google_map_adv_styling }}
+  </div>
+  {% endif %}
+  {% if settings.google_map_control %}
+  {% assign enable_control = 'yes' %}
+  {% else %}
+  {% assign enable_control = 'no' %}
+  {% endif %}
+  <div class="map-canvas" data-center-lat="" data-center-lng="" data-zoom="{{ settings.google_map_zoom }}" data-controls="{{ enable_control }}" data-maptype="{{ settings.google_map_type }}" data-mapcolor="" data-mapsaturation="{{ settings.google_map_saturation }}" style="width: 100%; height: {{ settings.google_map_height }}px;"></div>
+  <div class="pin_location" data-title="" data-pinlink="{{ settings.google_map_pin_link }}" data-pinimage="{{ 'google_map_pin_image.png' | asset_url }}" data-address="{{ settings.google_map_address }}" data-content="{{ settings.google_map_text }}" data-lat="{{ settings.google_map_pin_latitude }}" data-lng="{{ settings.google_map_pin_longitude }}" data-button-text="{{ settings.google_map_pin_button_text }}"></div>
+</div> 
+{% else %}
+{% include 'breadcrumb' %} 
+{% endif %}
+<div class="container">
+	<div class="row">
+      <div class="contact-container">  
+        <div class="col-sm-6">
+          <div class="title-wrap">
+            <h3 class="text-heading"> 
+              {% if settings.language_enable %}
+              <span class="lang1">{{ settings.contact_form_titlee | split: '|' | first }}</span>
+              <span class="lang2">{{ settings.contact_form_title | split: '|' | last }}</span>
+              {% else %}
+              {{ settings.contact_form_title | split: '|' | first }}
+              {% endif %}
+            </h3>
+          </div>
+          <div class="form-vertical">
+            {% form 'contact' %}  
+            {% if form.posted_successfully? %}
+            <p class="note form-success" {% if settings.language_enable %}data-translate="contact.form.post_success"{% endif %}>
+              {{ 'contact.form.post_success' | t }}
+            </p>
+            {% endif %} 
+            {{ form.errors | default_errors }}
+
+            {% assign name_attr = 'contact.form.name' | t | handle %}
+            <label for="ContactFormName" class="hidden-label">{{ 'contact.form.name' | t }}</label>
+            <input type="text" id="ContactFormName" class="input-full" name="contact[{{ name_attr }}]" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+
+            <label for="ContactFormEmail" class="hidden-label">{{ 'contact.form.email' | t }}</label>
+            <input type="email" id="ContactFormEmail" class="input-full" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+
+            {% assign name_attr = 'contact.form.phone' | t | handle %}
+            <label for="ContactFormPhone" class="hidden-label">{{ 'contact.form.phone' | t }}</label>
+            <input type="tel" id="ContactFormPhone" class="input-full" name="contact[{{ name_attr }}]" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+
+            <label for="ContactFormMessage" class="hidden-label">{{ 'contact.form.message' | t }}</label>
+            <textarea rows="10" id="ContactFormMessage" class="input-full" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+            <input type="submit" class="btn-button right" {% if settings.language_enable %}data-translate="contact.form.send"{% endif %} value="{{ 'contact.form.send' | t }}">
+
+            {% endform %}
+          </div>
+        </div> 
+        <div class="col-sm-6">
+          <div class="row"> 
+			<div class="contact-img">
+               <img src="{{ 'contact_image.jpg' | asset_url }}">
+            </div>
+            {% if settings.language_enable %}
+            <div class="lang1">{{ page.content | split: '' | first }}</div>
+            <div class="lang2">{{ page.content | split: '|' | last }}</div>
+            {% else %}
+            {{ page.content | split: '|' | first }}
+            {% endif %}
+          </div>
+        </div>  
+      </div>
+  </div>
+</div>

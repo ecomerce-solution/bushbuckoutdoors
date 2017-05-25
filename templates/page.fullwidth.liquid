@@ -1,0 +1,18 @@
+<!-- /templates/page.liquid -->
+
+{% include 'breadcrumb' %}
+<div class="container-fluid no-padding margin-top-minus-30 about-us-container"> 
+  <div class="page-container"> 
+    {% comment %}
+      Regular page content goes here.
+    {% endcomment %}
+    <div class="rte"> 
+      {% if settings.language_enable %}
+      <div class="lang1">{{ page.content | split: '' | first }}</div>
+      <div class="lang2">{{ page.content | split: '|' | last }}</div>
+      {% else %}
+      {{ page.content | split: '|' | first }}
+      {% endif %}
+    </div> 
+  </div> 
+</div>

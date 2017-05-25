@@ -1,0 +1,391 @@
+/*============================================================================
+  #General Variables
+==============================================================================*/
+
+// Basic Colors
+$textColor: {{ settings.text_color }};
+$colorLink: {{ settings.color_link }};
+$colorLinkHover: {{settings.color_link_hover}};
+// Button colors
+$buttonBackgroundColor: {{ settings.button_background_color }};
+$buttonTextColor: {{ settings.button_text_color }};
+$buttonHoverBackgroundColor: {{ settings.button_hover_background_color }};
+$buttonHoverTextColor: {{ settings.button_hover_text_color }}; 
+$buttonBorderColor: {{ settings.button_border_color }};
+$buttonHoverBorderColor: {{ settings.button_hover_border_color }};
+
+// Page color
+$bodyBackgroundColor: {{ settings.body_background_color }};
+{% if settings.body_background_image_enable != blank %}
+	$bodyBackgroundImage: url({{ 'body_background_image.jpg' | asset_url }});
+{% else %}
+	$bodyBackgroundImage: none;
+{% endif %}
+$bodyBackgroundRepeat: {{ settings.body_background_image_repeat }};
+$bodyBackgroundAttachment: {{ settings.body_background_image_attachment }};
+$bodyBackgroundImagePositionx: {{ settings.body_background_image_positionx }};
+$bodyBackgroundImagePositiony: {{ settings.body_background_image_positiony }};
+{% if settings.body_background_pattern_enable != blank %}
+$bodyBackgroundPattern: url({{ 'body_background_pattern.png' | asset_url }});
+{% else %}
+$bodyBackgroundPattern: none;
+{% endif %}
+
+// Header color
+$headerBackgroundColor: {{ settings.header_background_color }};
+{% if settings.header_pattern_enable != blank %}
+$headerBackgroundPattern: url({{ 'header_background_pattern.png' | asset_url }});
+{% else%}
+$headerBackgroundPattern: none;
+{% endif %}
+$headerTextColor: {{ settings.header_text_color }};
+$headerLinkColor: {{ settings.header_link_color }};
+$headerLinkHoverColor: {{ settings.header_link_hover_color }};
+$headerIconColor: {{ settings.header_icon_color }};
+$headerHomeIconColor: {{ settings.header_home_icon_color }};
+
+// Mainmenu
+$menuBackgroundColor: {{ settings.menu_background_color }};
+$menuItemBackgroundColor: {{ settings.menu_item_background_color }};
+$menuItemTextColor: {{ settings.menu_item_text_color }};
+$menuItemHoverBackgroundColor: {{ settings.menu_item_hover_background_color }};
+$menuItemHoverTextColor: {{ settings.menu_item_hover_text_color }};
+$menuItemActiveBackgroundColor: {{ settings.menu_item_active_background_color }};
+$menuItemActiveTextColor: {{ settings.menu_item_active_text_color }};
+$menuItemHomeBackgroundColor: {{ settings.menu_item_home_background_color }};
+$menuItemHomeHoverBackgroundColor: {{ settings.menu_item_home_hover_background_color }}; 
+$menuItemHomeTextColor: {{ settings.menu_item_home_text_color }};
+$menuItemHomeHoverTextColor: {{ settings.menu_item_home_hover_text_color }};
+$menuItemHomeActiveBackgroundColor: {{ settings.menu_item_home_active_background_color }};
+$menuItemHomeActiveTextColor: {{ settings.menu_item_home_active_text_color }};
+$menuDropdownBackgroundColor: {{ settings.menu_dropdown_background_color }};
+$menuDropdownTextColor: {{ settings.menu_dropdown_text_color }};
+$menuDropdownLinkColor: {{ settings.menu_dropdown_link_color }};
+$menuDropdownLinkHoverColor: {{ settings.menu_dropdown_link_hover_color }};
+$menuLabelBackgroundColor: {{ settings.menu_label_background_color }};
+$menuLabelTextColor: {{ settings.menu_label_text_color }};
+
+// Main color
+$mainBackgroundColor: {{ settings.main_background_color }};
+{% if settings.main_pattern_enable != blank %}
+$mainBackgroundPattern: url({{ 'main_background_pattern.png' | asset_url }});
+{% else %}
+$mainBackgroundPattern: none;
+{% endif %} 
+
+// Product Page
+$productIconAddtoBgColor: {{ settings.product_icon_addto_bg_color }};
+$productIconAddtoHoverBgColor: {{ settings.product_icon_addto_hover_bg_color }};
+
+// Footer color
+$footerBackgroundColor: {{ settings.footer_background_color }};
+{% if settings.footer_pattern_enable != blank %}
+$footerBackgroundPattern: url({{ 'footer_background_pattern.png' | asset_url }});
+{% else %}
+$footerBackgroundPattern: none;
+{% endif %} 
+$footerTextColor: {{ settings.footer_text_color }};
+$footerLinkColor: {{ settings.footer_link_color }};
+$footerLinkHoverColor: {{ settings.footer_link_hover_color }};
+$footerHeadingColor: {{ settings.footer_heading_color }};
+
+/*================ Typography ================*/
+// basic font
+$fontSize: {{ settings.font_size }}px;
+{% if settings.basic_font == 'google'%}
+  $fontFamily: {{ settings.google_font }};
+{% else %}
+  $fontFamily: {{ settings.family_font }};
+{% endif%}
+// heading font
+{% if settings.heading_font == 'google'%}
+  $headingFontFamily: {{ settings.heading_google_font }};
+{% else %}
+  $headingFontFamily: {{ settings.heading_family_font }};
+{% endif%}
+$h1: {{ settings.h1_font_size }}px;
+$h2: {{ settings.h2_font_size }}px;
+$h3: {{ settings.h3_font_size }}px;
+$h4: {{ settings.h4_font_size }}px;
+$h5: {{ settings.h5_font_size }}px;
+$h6: {{ settings.h6_font_size }}px;
+ 
+/*****************************************/
+/************** Basic ********************/
+/*****************************************/
+body {
+  color: $textColor;
+  font-size: $fontSize;
+  font-family: $fontFamily;
+  h1 {
+  	font-size: $h1;
+    font-family: $headingFontFamily;
+  }
+  h2 {
+  	font-size: $h2;
+    font-family: $headingFontFamily;
+  }
+  h3 {
+  	font-size: $h3;
+    font-family: $headingFontFamily;
+  }
+  h4 {
+  	font-size: $h4;
+    font-family: $headingFontFamily;
+  }
+  h5 {
+  	font-size: $h5;
+    font-family: $headingFontFamily;
+  }
+  h6 {
+  	font-size: $h6;
+    font-family: $headingFontFamily;
+  }
+}
+a {
+  color: $colorLink;
+  &:focus {
+    color: $colorLink;
+  }
+  &:hover {
+  	color: $colorLinkHover;
+  }
+}
+// button
+.btn-button, .spr-button {
+  background-color: $buttonBackgroundColor;
+  color: $buttonTextColor;
+  border: solid 2px $buttonBorderColor;
+  &:hover {
+  	background-color: $buttonHoverBackgroundColor;
+    color: $buttonHoverTextColor;
+    border: solid 2px $buttonHoverBorderColor;
+  }
+  &.effect {
+    &:before {
+      background-color: $buttonHoverBackgroundColor;
+      color: $buttonHoverTextColor;
+    }
+  }
+}
+/*****************************************/
+/************** Page ********************/
+/*****************************************/
+body {
+  {% if settings.body_background_image_enable != blank and settings.body_background_pattern_enable == blank %}
+  background-image: $bodyBackgroundImage;
+  background-repeat: $bodyBackgroundRepeat;
+  background-position: $bodyBackgroundImagePositionx $bodyBackgroundImagePositiony;
+  background-attachment: $bodyBackgroundAttachment;
+  {% endif %}
+  {% if settings.body_background_pattern_enable != blank and settings.body_background_image_enable == blank %}
+  background-image: $bodyBackgroundPattern;
+  {% endif %}
+}
+
+/*****************************************/
+/************** Header ********************/
+/*****************************************/
+.header-wrapper .main-header {
+  {% if settings.header_pattern_enable != blank %}
+  background-image: $headerBackgroundPattern;
+  {% endif%}
+  background-color: $headerBackgroundColor;
+  color: $headerTextColor;
+  a {
+  	color: $headerLinkColor;
+    &:hover {
+      color: $headerLinkHoverColor;
+    }
+  }
+  .icon-cart-header {
+    .icon_bag_alt {
+      color: $headerIconColor !important;
+    }
+  }
+  .overwrite-setting{
+    span, i {
+    	color: $headerIconColor !important;
+    }
+  }
+} 
+.template-index { 
+  .header-wrapper .is-sticky .main-header {
+    {% if settings.header_pattern_enable != blank %}
+    background-image: $headerBackgroundPattern;
+    {% endif%}
+    background-color: $headerBackgroundColor !important;
+    .icon-cart-header {
+      .icon_bag_alt {
+        color: $headerIconColor !important;
+      }
+    }
+    .overwrite-setting{
+      span, i {
+        color: $headerIconColor !important;
+      }
+    }
+  }
+  .header-wrapper .main-header {
+  	.icon-cart-header {
+      .icon_bag_alt {
+        color: $headerHomeIconColor !important;
+      }
+    }
+    .overwrite-setting{
+      span, i {
+          color: $headerHomeIconColor !important;
+      }
+    }
+  }
+}
+
+/*****************************************/
+/************** Main Menu ********************/
+/*****************************************/
+
+.navigation-wrapper {
+  .main-navigation {
+    background-color: $menuBackgroundColor;
+    .top-navigation {
+      .level0 {
+      	background-color: $menuItemBackgroundColor;
+        .level-top {
+          color: $menuItemTextColor;
+          .cat-label {
+          	background-color: $menuLabelBackgroundColor;
+            color: $menuLabelTextColor;
+            &:before {
+              border-top-color: $menuLabelBackgroundColor;
+            }
+          }
+          &:after {
+          	background-color: $menuItemTextColor;
+          }
+        }
+        &:hover {
+        	background-color: $menuItemHoverBackgroundColor;
+          .level-top {
+          	color: $menuItemHoverTextColor;
+          }
+        }
+        &.active {
+          background-color: $menuItemActiveBackgroundColor;
+          .level-top {
+            color: $menuItemActiveTextColor;
+          }
+        } 
+      }
+      li {
+        .menu-wrap-sub {
+          background-color: $menuDropdownBackgroundColor !important;
+          ul {
+            li {
+              color: $menuDropdownTextColor;
+              a {
+                color: $menuDropdownLinkColor !important;
+                &:hover {
+                  color: $menuDropdownLinkHoverColor !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.template-index {
+  .is-sticky {
+     .navigation-wrapper {
+      .main-navigation {
+        background-color: $menuBackgroundColor;
+        .top-navigation {
+          .level0 {
+            background-color: $menuItemBackgroundColor;
+            .level-top {
+              color: $menuItemTextColor;
+              .cat-label {
+                background-color: $menuLabelBackgroundColor;
+                color: $menuLabelTextColor;
+                &:before {
+                  border-top-color: $menuLabelBackgroundColor;
+                }
+              }
+              &:after {
+                background-color: $menuItemTextColor;
+              }
+            }
+            &:hover {
+                background-color: $menuItemHoverBackgroundColor;
+              .level-top {
+                color: $menuItemHoverTextColor;
+              }
+            }
+            &.active {
+              background-color: $menuItemActiveBackgroundColor;
+              .level-top {
+                color: $menuItemActiveTextColor;
+              }
+            } 
+          }
+        }
+      }
+    }
+  }
+  .navigation-wrapper {
+    .main-navigation {
+      background-color: $menuItemHomeBackgroundColor;
+      .top-navigation {
+        .level0 {
+          background-color: $menuItemHomeBackgroundColor;
+          .level-top {
+            color: $menuItemHomeTextColor;
+          }
+          &:hover {
+            background-color: $menuItemHomeHoverBackgroundColor;
+            .level-top {
+              color: $menuItemHomeHoverTextColor;
+            }
+          }
+          &.active {
+          	background-color: $menuItemHomeActiveBackgroundColor;
+            .level-top {
+              color: $menuItemHomeActiveTextColor;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/*****************************************/
+/************** Main ********************/
+/*****************************************/
+
+.main-container {
+  background-image: $mainBackgroundPattern;
+  background-color: $mainBackgroundColor;
+}
+
+
+/*****************************************/
+/************** Footer ********************/
+/*****************************************/
+
+.footer-wrapper {
+  {% if settings.footer_pattern_enable != blank %}
+  background-image: $footerBackgroundPattern;
+  {% endif%}
+  background-color: $footerBackgroundColor;
+  color: $footerTextColor;
+  a {
+  	color: $footerLinkColor;
+    &:hover {
+    	color: $footerLinkHoverColor
+    }
+  }
+  h3, .title-footer, .block-title {
+  	color: $footerHeadingColor;
+  }
+}

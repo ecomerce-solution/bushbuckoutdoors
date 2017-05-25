@@ -1,0 +1,233 @@
+<style>
+  .spt-box-container{
+    margin-top:20px;
+    display:block;
+  }
+  .spt-box-container img{
+    height: auto !important;
+    max-width:100% !important;
+  }
+  .spt-box{
+    display:inline-block;
+  }
+  .spt-accordian{
+    padding:0px !important;
+    list-style-type:none;
+    margin: 0px !important;
+  }
+  .spt-accordian>li{
+    padding:0px;
+    list-style-type:none;
+    border-top:1px solid #ddd;
+    margin:0px;
+  }
+  .spt-accordian>li>h5{
+    cursor:pointer;
+  }
+  .spt-accordian>li:last-child{
+    border-bottom:1px solid #ddd;
+  }
+  .spt-accordian>li>.spt-desc{
+    display:none;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-bottom: 0px;
+  }
+  .spt-accordian>li>.spt-title{
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 0px;
+    border-top: none;
+    border-bottom: 0px;
+  }
+  .spt-accordian>li>.spt-title:after{
+    content: "+";
+    font-size: 90%;
+    margin: 0px;
+    -webkit-transition-delay: 0.25s;
+    -moz-transition-delay: 0.25s;
+    -o-transition-delay: 0.25s;
+    transition-delay: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    float: right;
+    font-style: normal;
+  }
+  .spt-accordian>li>.spt-title.expanded:after{
+    content: "-";
+  }
+
+</style>
+<style>
+  ul.spt-tabs {
+    border-bottom: 1px solid #DDDDDD;
+    display: block;
+    margin: 0 0 20px;
+    padding: 0;
+  }
+  ul.spt-tabs li {
+    display: block;
+    float: left;
+    height: 30px;
+    margin-bottom: 0;
+    padding: 0;
+    width: auto;
+  }
+  ul.spt-tabs li a {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #F5F5F5;
+    border-color: #DDDDDD !important;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    display: block;
+    font-size: 13px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0 20px;
+    text-decoration: none;
+    width: auto;
+    color: #303030;
+    border-bottom:none !important;
+  }
+  ul.spt-tabs li a.active {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-left-width: 1px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    color: #111111;
+    position: relative;
+  }
+  ul.spt-tabs li:first-child a.active {
+    margin-left: 0;
+  }
+  ul.spt-tabs li:first-child a {
+    border-top-left-radius: 2px;
+    border-width: 1px 1px 0;
+  }
+  ul.spt-tabs li:last-child a {
+    border-top-right-radius: 2px;
+  }
+  ul.spt-tabs:before, ul.spt-tabs:after {
+    content: " ";
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+  }
+  ul.spt-tabs:after {
+    clear: both;
+  }
+  
+  .sp-fix:before,.sp-fix:after {
+      content: "\0020";
+      display: block;
+      height: 0;
+      visibility: hidden;
+  }
+  .sp-fix:after {
+      clear: both;
+  }
+</style>
+<script>
+  var loadScript = function(url, callback){
+
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+
+    // If the browser is Internet Explorer.
+    if (script.readyState){
+      script.onreadystatechange = function(){
+        if (script.readyState == "loaded" || script.readyState == "complete"){
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+      // For any other browser.
+    } else {
+      script.onload = function(){
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+
+  };
+
+  var myAppJavaScript = function($){
+    var sptabboxwidth;
+    $(document).ready(function(){
+
+      function switchbasedonwidth(){
+        var sptabbox = $('.spt-box');
+        var sptboxcontainer = $('.spt-box-container');
+        var sptabs = $('ul.spt-tabs li');
+        var spaccord = $('.spt-accordian');
+        var format = sptabbox.attr('data-format');
+        if(format == 'TAB'){
+          var w = 0;
+          sptabs.each(function(){
+            w = w + $(this).outerWidth();
+          });
+          if( w >= sptabboxwidth ){
+            sptabboxwidth = w;
+          }
+          var sptabs = sptabbox.width();
+          var sptboxcontainerwidth =  sptboxcontainer.width();
+          if( sptabboxwidth > sptabs && sptboxcontainerwidth < sptabboxwidth){
+            sptabbox.hide();
+            spaccord.show();
+          }
+          else{
+            sptabbox.show();
+            spaccord.hide();
+          }
+        }
+      }
+      sptabboxwidth = $('.spt-box').width();
+      $(window).resize(function(e){
+        e.preventDefault();
+        switchbasedonwidth();
+      });
+      $('.spt-accordian>li>h5').click(function(){
+        $(this).toggleClass('expanded');
+        $(this).next().slideToggle();
+      });
+      $('ul.spt-tabs').each(function(){
+        var active, content, links = $(this).find('a');
+        active = links.first().addClass('active');
+        content = $(active.attr('href'));
+        links.not(':first').each(function () {
+          $($(this).attr('href')).hide();
+        });
+        $(this).find('a').click(function(e){
+          active.removeClass('active');
+          content.hide();
+          active = $(this);
+          content = $($(this).attr('href'));
+          active.addClass('active');
+          content.show();
+          return false;
+        });
+      });
+      switchbasedonwidth();
+    });
+  }
+  if ((typeof jQuery === 'undefined') || (parseFloat(jQuery.fn.jquery) < 1.7)) {
+    loadScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', function(){
+      jQuery1111 = jQuery.noConflict(true);
+      myAppJavaScript(jQuery1111);
+    });
+  } else {
+    myAppJavaScript(jQuery);
+  }
+</script>

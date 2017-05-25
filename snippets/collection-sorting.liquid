@@ -1,0 +1,46 @@
+<!-- /snippets/collection-sorting.liquid -->
+<div class="col-sm-9">
+  <div class="sorter_wrap">
+    <div class="sort-by">
+      <div class="select-new">
+        <div class="select-inner">
+          <span {% if settings.language_enable %}data-translate="collections.sorting.title"{% endif %}>{{ 'collections.sorting.title' | t }}: </span>
+          {% assign sort_def = collection.sort_by | default: collection.default_sort_by | escape %}
+          <select name="sort-by" class="field">
+            <option value="manual"{% if sort_def == 'manual' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.featured"{% endif %}>{{ 'collections.sorting.featured' | t }}</option>
+            <option value="best-selling"{% if sort_def == 'best-selling' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.best_selling"{% endif %}>{{ 'collections.sorting.best_selling' | t }}</option>
+            <option value="title-ascending"{% if sort_def == 'title-ascending' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.az"{% endif %}>{{ 'collections.sorting.az' | t }}</option>
+            <option value="title-descending"{% if sort_def == 'title-descending' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.za"{% endif %}>{{ 'collections.sorting.za' | t }}</option>
+            <option value="price-ascending"{% if sort_def == 'price-ascending' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.price_ascending"{% endif %}>{{ 'collections.sorting.price_ascending' | t }}</option>
+            <option value="price-descending"{% if sort_def == 'price-descending' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.price_descending"{% endif %}>{{ 'collections.sorting.price_descending' | t }}</option>
+            <option value="created-descending"{% if sort_def == 'created-descending' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.date_descending"{% endif %}>{{ 'collections.sorting.date_descending' | t }}</option>
+            <option value="created-ascending"{% if sort_def == 'created-ascending' %} selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.sorting.date_ascending"{% endif %}>{{ 'collections.sorting.date_ascending' | t }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="limited_wrap hidden-xs">
+    <div class="limited-view select-new">
+      <div class="select-inner">
+      	<span {% if settings.language_enable %}data-translate="collections.limiter.title"{% endif %}>{{ 'collections.limiter.title' | t }}: </span>
+        <select name="limiter" class="field">
+          <option value="12" {% if template == 'collection' %}selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.limiter.limit_12"{% endif %}>{{ 'collections.limiter.limit_12' | t }}</option>
+          <option value="16" {% if template == 'collection.16' %}selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.limiter.limit_16"{% endif %}>{{ 'collections.limiter.limit_16' | t }}</option>
+          <option value="32" {% if template == 'collection.32' %}selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.limiter.limit_32"{% endif %}>{{ 'collections.limiter.limit_32' | t }}</option>
+          <option value="all" {% if template == 'collection.all' %}selected="selected"{% endif %} {% if settings.language_enable %}data-translate="collections.limiter.limit_all"{% endif %}>{{ 'collections.limiter.limit_all' | t }}</option> 
+        </select>
+      </div>
+    </div> 
+  </div>
+</div> 
+<div class="col-sm-3">
+  <div class="view-mode">
+    <span class="layout-opt active" data-layout="grid" title="{{ 'collections.general.grid_view' | t }}">
+      <span aria-hidden="true" class="icon_grid-3x3"></span>
+    </span>
+    <span class="layout-opt" data-layout="list" title="{{ 'collections.general.list_view' | t }}">
+      <span aria-hidden="true" class="icon_ul"></span>
+    </span>
+  </div> 
+</div> 

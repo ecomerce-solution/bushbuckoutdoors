@@ -1,0 +1,35 @@
+<div class="terminal-wrapper" style="{% if settings.testimonial_bg_image_enable != blank %} background: url({{ 'testimonial_bg_image.jpg' | asset_url }}) center center no-repeat;{% endif %} background-size: cover; background-color: {{ settings.home_testimonial_bg_color }};">
+  <div class="container">
+    <div class="data-carousel" 
+         data-items="1"
+         data-mobile="1"
+         data-auto="5000"
+         data-paging="true"
+         data-nav="false"
+         data-prev=''
+         data-next='' style="display: none;"></div>
+    <div class="owl-carousel owl-theme">
+      {% for i in (1..4) %}
+      {% capture author %}home_testimonial_author_{{ i }}{% endcapture %}
+      {% capture author_write %}home_testimonial_author_write_{{ i }}{% endcapture %}
+      {% capture content %}home_testimonial_content_{{ i }}{% endcapture %}
+      {% if settings[content] != blank %}
+      <div class="item"> 
+        <div class="testerminal-inner">
+          {% if author_img_enable %}
+          <img src="{{ author_img | asset_url }}" alt="" />
+          {% endif %}
+          {% if content %}
+          <div class="write-author">{{ settings[author] }}</div>
+          <div class="write-by">{{ settings[author_write] }}</div>
+          <div class="content">
+            {{ settings[content] }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

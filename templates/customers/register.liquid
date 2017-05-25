@@ -1,0 +1,42 @@
+<!-- /templates/customers/register.liquid -->
+
+<div class="container">
+
+  <div class="account-create">
+	<div class="page-title">
+        <h1 {% if settings.language_enable %}data-translate="customer.register.title"{% endif %}>{{ 'customer.register.title' | t }}</h1>
+        <p {% if settings.language_enable %}data-translate="customer.register.message"{% endif %}>{{ 'customer.register.message' | t }}</p>
+    </div> 
+
+    <div class="form-box">
+      {% form 'create_customer' %}
+
+        {{ form.errors | default_errors }}
+      <div class="content">
+        <ul class="form-list">
+          <li>
+          	<label for="FirstName" class="hidden-label" {% if settings.language_enable %}data-translate="customer.register.first_name"{% endif %}>{{ 'customer.register.first_name' | t }}</label>
+        	<input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+          </li>
+          <li>
+          	<label for="LastName" class="hidden-label" {% if settings.language_enable %}data-translate="customer.register.last_name"{% endif %}>{{ 'customer.register.last_name' | t }}</label>
+	        <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+          </li>
+          <li>
+          	<label for="Email" class="hidden-label" {% if settings.language_enable %}data-translate="customer.register.email"{% endif %}>{{ 'customer.register.email' | t }}</label>
+        	<input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.register.email' | t }}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+          </li>
+          <li>
+          	<label for="CreatePassword" class="hidden-label" {% if settings.language_enable %}data-translate="customer.register.password"{% endif %}>{{ 'customer.register.password' | t }}</label>
+        	<input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
+          </li>
+        </ul>
+      </div>
+      <div class="buttons-set">
+      	<input type="submit" {% if settings.language_enable %}data-translate="customer.register.submit"{% endif %} value="{{ 'customer.register.submit' | t }}" class="btn-button uppercase">
+        <p><a href="{{ shop.url }}" {% if settings.language_enable %}data-translate="customer.register.cancel"{% endif %}>{{ 'customer.register.cancel' | t }}</a></p>
+      </div>  
+      {% endform %}
+    </div> 
+  </div> 
+</div>
